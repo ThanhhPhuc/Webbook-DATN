@@ -904,7 +904,7 @@ textarea:-ms-input-placeholder {
   z-index: 9;
   border: none;
   background-color: var(--mainColor3);
-  color: #fff;
+  /* color: #fff; */
   padding: 10px;
   width: 34px;
   height: 34px;

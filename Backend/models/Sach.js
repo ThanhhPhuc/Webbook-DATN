@@ -8,7 +8,7 @@ const sachSchema = new Schema({
   category: { type: Schema.Types.ObjectId, ref: 'Theloai' },
   publisher: { type: Schema.Types.ObjectId, ref: 'NXB' },
   price: { type: Number, required: true },
-  image: { type: String } // Thêm trường lưu trữ đường dẫn ảnh
+  image: { type: String } 
 });
 
 module.exports = mongoose.model('Sach', sachSchema);
