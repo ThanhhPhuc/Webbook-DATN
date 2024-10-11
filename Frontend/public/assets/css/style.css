@@ -1127,7 +1127,7 @@ blockquote.blockquote .author {
 /*  02. Header CSS
 /*----------------------------------------*/
 header {
-  background-color: #dc3545; /* Màu nền đỏ */
+  background-color: var(--mainColor); /* Màu nền đỏ */
   padding: 15px 20px;
 }
 
@@ -1209,6 +1209,36 @@ header {
   width: 100%;
   height: 100%; /* Đảm bảo hình ảnh phủ đầy chiều cao của carousel */
   object-fit: cover; /* Đảm bảo hình ảnh lấp đầy không gian mà không bị méo */
+}
+.fhs-banner-image-block {
+  margin-top: 20px; /* Cách banner trên 20px */
+  display: flex;
+  justify-content: space-between;
+}
+
+.fhs-banner-image-block .block-item {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.fhs-banner-image-block img {
+  width: 90%;
+  height: 210px; /* Điều chỉnh chiều cao ảnh cho bằng với banner trên */
+  object-fit: cover;
+}
+
+.fhs-banner-image-block img:hover {
+  transform: scale(1.05); /* Tạo hiệu ứng phóng to khi hover */
+}
+
+@media (max-width: 768px) {
+  .fhs-banner-image-block {
+    flex-wrap: wrap; /* Đảm bảo các ảnh xếp chồng lên nhau trên màn hình nhỏ */
+  }
+  
+  .fhs-banner-image-block .block-item {
+    margin-bottom: 15px;
+  }
 }
 
 /* .ht-us-menu,

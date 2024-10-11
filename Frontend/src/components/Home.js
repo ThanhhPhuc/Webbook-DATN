@@ -61,10 +61,9 @@ function Home() {
   }, []);
   return (
 <div id="main-wrapper">
-
 <header className="bg-danger py-3">
   <div className="container d-flex justify-content-between align-items-center">
-    <a href="#" className="navbar-brand text-white fw-bold fs-3">Libworld</a>
+    <a href="/" className="navbar-brand text-white fw-bold fs-3">Libworld</a>
     <form className="d-flex flex-grow-1 mx-3">
       <input className="form-control me-2" type="search" placeholder="Tìm kiếm sách" aria-label="Search" />
       <button className="btn btn-warning" type="submit">Tìm kiếm</button>
@@ -79,15 +78,12 @@ function Home() {
           <li><a className="dropdown-item" href="/register">Đăng ký</a></li>
         </ul>
       </div>
-
-      <div className="header-cart dropdown me-3">
-        <button className="btn btn-outline-light dropdown-toggle" type="button" id="cartDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <img src="../assets/images/cart.png" alt="Giỏ hàng" style={{width: 20, height: 'auto'}} />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="cartDropdown">
-          <li><a className="dropdown-item" href="">Giỏ hàng rỗng</a></li>
-        </ul>
-      </div>
+  <Link to="/cart">
+      <div className="header-cart dropdown me-4">
+    <button className="btn btn-outline-light" type="button">
+      <img src="../assets/images/cart.png" alt="Giỏ hàng" style={{ width: 20, height: 'auto' }} />
+    </button>
+</div></Link>
       <div className="header-language dropdown">
         <button className="btn btn-outline-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="../assets/images/iconvn.webp" alt="VN" style={{width: 20, height: 'auto'}} /> 
@@ -137,30 +133,38 @@ function Home() {
     </div>
   </section>
   {/* Promotional Section */}
-  <section id="promotions" className="py-4">
-    <div className="container">
-      <div className="row">
-        <div className="col-md-4 mb-3">
-          <div className="promo-card text-center p-3 bg-light border">
-            <h4>Discounts up to 50%</h4>
-            <button className="btn btn-danger mt-2">Shop Now</button>
-          </div>
-        </div>
-        <div className="col-md-4 mb-3">
-          <div className="promo-card text-center p-3 bg-light border">
-            <h4>New Releases</h4>
-            <button className="btn btn-danger mt-2">Explore</button>
-          </div>
-        </div>
-        <div className="col-md-4 mb-3">
-          <div className="promo-card text-center p-3 bg-light border">
-            <h4>Free Shipping</h4>
-            <button className="btn btn-danger mt-2">Learn More</button>
-          </div>
-        </div>
-      </div>
+ <div className="fhs-banner-image-block">
+  <div className="col-sm-3 col-md-3 col-xs-6 block-item no-padding hidden-xs">
+    <div className="banner-home-inner">
+      <a href="https://www.fahasa.com/sale">
+        <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2024/TrangCTthang10_Mainbanner_Resize_Smallbanner_310x210.png" alt />
+      </a>
     </div>
-  </section>
+  </div>
+  <div className="col-sm-3 col-md-3 col-xs-6 block-item no-padding">
+    <div className="banner-home-inner">
+      <a className="cursor-pointer" href="#">
+        <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2024/Trang20.10_SmallBanner_310x210.jpg" alt="Banner 2" />
+      </a>
+    </div>
+  </div>
+  <div className="col-sm-3 col-md-3 col-xs-6 block-item no-padding">
+    <div className="banner-home-inner">
+      <a className="cursor-pointer" href="#">
+        <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2024/Kinhte_LDP_Smallbanner_310x210.jpg" alt="Banner 3" />
+      </a>
+    </div>
+  </div>
+  <div className="col-sm-3 col-md-3 col-xs-6 block-item no-padding">
+    <div className="banner-home-inner">
+      <a className="cursor-pointer" href="#">
+        <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2024/TanViet_Smallbanner_T10_310x210_Silver.jpg" alt="Banner 4" />
+      </a>
+    </div>
+  </div>
+</div>
+
+
 
 
   <div class="container mt-30 mb-50">
@@ -226,9 +230,9 @@ function Home() {
                 </h3>
                 <div className="card-wrapper">
                   <p className="card-price">{book.price ? `${book.price} VND` : 'Price not available'}</p>
-                  <button className="card-btn">
+                
                     <ion-icon name="basket" />
-                  </button>
+              
                 </div>
               </div>
             </div>

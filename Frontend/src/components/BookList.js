@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import API from '../api';
-
+import { Link } from 'react-router-dom';
 const BookList = () => {
     const [products, setProducts] = useState([]);
 
@@ -19,131 +19,58 @@ const BookList = () => {
     return (
         <div>
  <div id="main-wrapper">
-  <header className="header-transparent">
-    <div className="header">
-      <div className="header-bottom menu-right">
-        <div className="container">
-          <div className="row align-items-center">
-            {/*Logo start*/}
-            <div className="col-lg-3 col-md-3 col-6 order-lg-1 order-md-1 order-1">
-              <div className="logo">
-                <a href="/"><img src="assets/images/logo.png" width="80px" alt="logo TG shop" /></a>
-              </div>
-            </div>
-            {/*Logo end*/}
-            {/*Menu start*/}
-            <div className="col-lg-6 col-md-6 col-12 order-lg-2 order-md-2 order-3 d-flex justify-content-center">
-              <nav className="main-menu menu-box">
-                <ul className="my-0">
-                  <li className="menu-boxs"><a href="/">Trang chủ</a>
-                  </li>
-                  <li className="menu-boxs"><a href="shop">Sản phẩm</a>
-                  </li>
-                  <li className="menu-boxs"><a href="baiviet">Bài viết</a>
-                  </li>
-                  <li className="menu-boxs"><a href="about.html">Tra cứu</a></li>
-                  <li className="menu-boxs"><a href="contact.html">Liên hệ</a></li>
-                </ul>
-              </nav>
-            </div>
-            {/*Menu end*/}
-            {/*Search Cart Start*/}
-            <div className="col-lg-3 col-md-3 col-6 order-lg-3 order-md-3 order-2 d-flex justify-content-end">
-              <div className="header-user">
-                <a href="/login">
-                  <i className="fa-solid fa-user" />
-                </a>
-              </div>
-              {/* <ul class="ht-us-menu d-flex my-2">
-                              <li class=""><a href="#">
-                                  <img src="assets/images/user1.png" alt="" class="avatar-user">
-                              </a>
-                                  <ul class="ht-dropdown right">
-                                      <li><p class="name-user">Chào mừng rossivo</p></li>
-                                      <li><a href="my-account.html">Thông tin tài khoản</a></li>
-                                      <li><a href="">Đăng xuất</a></li>
-                                  </ul>
-                              </li>
-                          </ul> */}
-              <div className="header-search">
-                <button className="header-search-toggle"><i className="fa fa-search" /></button>
-                <div className="header-search-form">
-                  <form action="#">
-                    <input type="text" placeholder="Nhập thông tin tiềm kiếm ..." />
-                    <button><i className="fa fa-search" /></button>
-                  </form>
-                </div>
-              </div>
-              <div className="header-cart">
-                <a href="cart"><i className="fa fa-shopping-cart" /></a>
-                {/*Mini Cart Dropdown Start*/}
-                {/*Mini Cart Dropdown End*/}
-              </div>
-            </div>
-            {/*Search Cart End*/}
-          </div>
-          {/*Mobile Menu start*/}
-          <div className="row">
-            <div className="col-12 d-flex d-lg-none">
-              <div className="mobile-menu" />
-            </div>
-          </div>
-          {/*Mobile Menu end*/}
-        </div>
+ <header className="bg-danger py-3">
+  <div className="container d-flex justify-content-between align-items-center">
+    <a href="/" className="navbar-brand text-white fw-bold fs-3">Libworld</a>
+    <form className="d-flex flex-grow-1 mx-3">
+      <input className="form-control me-2" type="search" placeholder="Tìm kiếm sách" aria-label="Search" />
+      <button className="btn btn-warning" type="submit">Tìm kiếm</button>
+    </form>
+    <div className="d-flex align-items-center">
+      <div className="header-user dropdown me-3">
+        <button className="btn btn-outline-light dropdown-toggle" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="../assets/images/user.png" alt="Tài khoản" style={{width: 20, height: 'auto'}} />
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="accountDropdown">
+          <li><a className="dropdown-item" href="/login">Đăng nhập</a></li>
+          <li><a className="dropdown-item" href="/register">Đăng ký</a></li>
+        </ul>
       </div>
-    </div>
-    <div className="header-tab-mobile">
-      <div className="row justify-content-center bg-main">
-        <img src="assets/images/logo2.png" alt className="logo-tab_mobile" />
+  <Link to="/cart">
+      <div className="header-cart dropdown me-4">
+    <button className="btn btn-outline-light" type="button">
+      <img src="../assets/images/cart.png" alt="Giỏ hàng" style={{ width: 20, height: 'auto' }} />
+    </button>
+</div></Link>
+      <div className="header-language dropdown">
+        <button className="btn btn-outline-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="../assets/images/iconvn.webp" alt="VN" style={{width: 20, height: 'auto'}} /> 
+          Tiếng Việt
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="languageDropdown">
+          <li>
+            <a className="dropdown-item" href="#">
+              <img src="../assets/images/iconanh.png" alt="EN" style={{width: 20, height: 'auto'}} /> Tiếng Anh
+            </a>
+          </li>
+        </ul>
       </div>
-      <div className="row bg-main sticky-top">
-        <div className="col-md-12 d-flex w-100 justify-content-between  px-4 py-4">
-          <div className="offcanvas offcanvas-start" id="demo">
-            <div className="offcanvas-header">
-              {/* <h1 class="offcanvas-title">Heading</h1> */}
-              <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" />
-            </div>
-            <div className="offcanvas-body">
-              <ul className="menu-hiden">
-                <li><a href>Trang chủ</a></li>
-                <li><a href>Bài viết</a></li>
-                <li><a href>Sản phẩm</a></li>
-                <li><a href>Về chúng tôi</a></li>
-                <li><a href>Liên hệ</a></li>
-              </ul>
-              {/* <button class="btn btn-secondary" type="button">A Button</button> */}
-            </div>
-          </div>
-          {/* Button to open the offcanvas sidebar */}
-          <div className="btn-open_menu__mobile">
-            <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
-              <i className="fa-solid fa-bars" />
-            </button>
-          </div>
-          <div className="input-search_mb">
-            <form action>
-              <input type="text" />
-              <input type="submit" defaultValue />
-            </form>
-          </div>
-          <div className="control-tab_mobile">
-            <a href><i className="fa-regular fa-user" /></a>
-            <a href><i className="fa-solid fa-cart-shopping" /></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <div className="container-fluid">
-    <div className="container">
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item"><a href="/">Trang chủ</a></li>
-          <li className="breadcrumb-item active" aria-current="shop">Sản phẩm</li>
-        </ol>
-      </nav>
     </div>
   </div>
+</header>
+<div className="container-fluid">
+  <div className="container">
+    <nav aria-label="breadcrumb">
+      <ol className="breadcrumb">
+        <li className="breadcrumb-item">
+          <a style={{ color: 'black' }} href="/">Trang chủ</a>
+        </li>
+        <li className="breadcrumb-item active" aria-current="shop">Sản phẩm</li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
   {/* <div class="container btn-cata_show py-2">
     <button data-bs-toggle="collapse" data-bs-target="#cata-se" class="btn-main">Thể loại</button>
 
