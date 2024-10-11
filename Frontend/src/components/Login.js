@@ -104,7 +104,7 @@ const Login = () => {
     </div>
     <div className="header-tab-mobile">
       <div className="row justify-content-center bg-main">
-        <img src="assets/images/logo2.png" alt className="logo-tab_mobile" />
+        <img src="assets/images/logo.png" alt className="logo-tab_mobile" />
       </div>
       <div className="row bg-main sticky-top">
         <div className="col-md-12 d-flex w-100 justify-content-between  px-4 py-4 pt-0">
@@ -186,90 +186,115 @@ const Login = () => {
           </div>
           <div className="d-xxl-none d-flex justify-content-center align-items-center mt-2">
             Bạn chưa có tài khoản
-            <div href="/register" className="register-now ml-2 ">Đăng ký ngay !</div>
+            <div onClick={handleRegisterClick} 
+      style={{cursor: 'pointer'}} className="register-now ml-2 ">Đăng ký ngay !</div>
           </div>
         </form>
       </div>
       <div className="fl-right">
         {/* <img src="/asset/img/sl1.jpg" alt=""> */}
         <h1>Bạn chưa có tài khoản ?</h1>
-        <div href="/register" className="register-now">Đăng ký ngay !</div>
+        <div onClick={handleRegisterClick} 
+      style={{cursor: 'pointer'}} className="register-now">Đăng ký ngay !</div>
       </div>
     </div>
     {/* -----------------------------End Form login------------------------- */}
 
   </div>
-  <footer className="footer-section section">
-    {/*Footer Top start*/}
-    <div className="footer-top section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-45 pb-lg-25 pb-md-15 pb-sm-5 pb-xs-0">
-      <div className="container">
-        <div className="row row-25">
-          {/*Footer Widget start*/}
-          <div className="footer-widget col-lg-4 col-md-6 col-sm-6 col-12 mb-40 mb-xs-35">
-            <img src="assets/images/logo2.png" alt className="logo-footer" />
-            <div className="footer-social">
-              <a href="#" className="twitter"><i className="fa fa-twitter" /></a>
-              <a href="#" className="facebook"><i className="fa fa-facebook" /></a>
-              <a href="#" className="google"><i className="fa fa-google-plus" /></a>
-              <a href="#" className="linkedin"><i className="fa fa-instagram" /></a>
-              <a href="#" className="pinterest"><i className="fa fa-pinterest-p" /></a>
-              <a href="#" className="pinterest"><i className="fa fa-vimeo" /></a>
-            </div>
-          </div>
-          {/*Footer Widget end*/}
-          {/*Footer Widget start*/}
-          <div className="footer-widget col-lg-4 col-md-6 col-sm-6 col-12 mb-40 mb-xs-35">
-            <h4 className="title"><span className="text">Thể loại</span></h4>
-            <ul className="ft-menu">
-              <li><a href="#">New products</a></li>
-              <li><a href="#">Top sellers</a></li>
-              <li><a href="#">Specials</a></li>
-              <li><a href="#">Manufacturers</a></li>
-              <li><a href="#">Suppliers</a></li>
-              <li><a href="#">Specials</a></li>
-              <li><a href="#">Service</a></li>
-            </ul>
-          </div>
-          {/*Footer Widget end*/}
-          {/*Footer Widget start*/}
-          <div className="footer-widget col-lg-4 col-md-6 col-sm-6 col-12 mb-40 mb-xs-35">
-            <h4 className="title"><span className="text">Liên hệ</span></h4>
-            <ul className="address">
-              <li><i className="fa fa-home" /><span>HH2 BacHa building, Tohuu Street Hanoi,
-                  Vietnam</span>
-              </li>
-              <li><i className="fa fa-phone" /><span><a href="#">(08) 123 456 7890</a></span></li>
-              <li><i className="fa fa-envelope-o" /><span><a href="#">yourmail@domain.com</a></span>
-              </li>
-            </ul>
-            <div className="payment-box mt-15 mb-15">
-            <a href="/"><img src="./assets/images/logo.png" width="80px" height="80" /></a>
-            </div>
-          </div>
-          {/*Footer Widget end*/}
+  <div className="fixed-icons">
+  <a href="tel:+84123456789" className="icon-phone">
+    <img src="../assets/images/phone.png" alt="Phone" />
+  </a>
+  <a href="#" className="icon-zalo">
+    <img src="../assets/images/messenger.png" alt="messenger" />
+  </a>
+  <a href="#" className="icon-facebook">
+    <img src="../assets/images/facebook.png" alt="Facebook" />
+  </a>
+  <a href="#" className="icon-tiktok">
+    <img src="../assets/images/tiktok.png" alt="TikTok" />
+  </a>
+</div>
+  <footer className="footer-section" style={{ backgroundColor: "#f8f9fa", padding: "40px 0" }}>
+  <div className="row mb-4">
+  <div className="col-md-12 text-center" style={{ backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '5px' }}>
+    <form className="d-flex justify-content-center align-items-center">
+      <h4 className="mb-0 me-3" style={{ color: '#FF7F00' }}>Đăng ký nhận bản tin</h4>
+      <input
+        type="email"
+        className="form-control me-2"
+        placeholder="Nhập địa chỉ email của bạn"
+        style={{ borderRadius: '5px', border: '1px solid #ccc', width: '300px' }}
+      />
+      <button className="btn" style={{ backgroundColor: '#FF7F00', color: '#fff', borderRadius: '5px' }} type="submit">
+        Đăng ký
+      </button>
+    </form>
+  </div>
+</div>
+<div className="container">
+        <div className="row">
+        <div className="col-lg-4 col-md-7 mb-4">
+    <div className="footer-logo color-black text-dark">
+        <h1><a href="/" className="text-dark">Libworld.com</a></h1>
+        <p>Lầu 5, 387-389 Hai Bà Trưng Quận 3 TP HCM</p>
+        <p>Công Ty Cổ Phần Phát Hành Sách TP HCM - LIBWORLD</p>
+        <p>60 - 62 Lê Lợi, Quận 1, TP. HCM, Việt Nam</p>
+        <p>Libworld.com nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả hệ thống Libworld trên toàn quốc.</p>
+        <div className="footer-social d-flex">
+            <a href="#" className="me-3"><i className="fa fa-facebook" /></a>
+            <a href="#" className="me-3"><i className="fa fa-twitter" /></a>
+            <a href="#" className="me-3"><i className="fa fa-instagram" /></a>
+            <a href="#"><i className="fa fa-youtube" /></a>
         </div>
-      </div>
     </div>
-    {/*Footer Top end*/}
-    {/*Footer bottom start*/}
-    <div className="footer-bottom section">
-      <div className="container ft-border pt-40 pt-xs-20 pb-xs-20">
-        <div className="row justify-content-between align-items-center">
-          <div className="col-lg-6 col-md-6 col-sm-8">
-            <div className="copyright text-left">
-              <p>Copyright ©2019 <a href="#">Theface</a>. All rights reserved.</p>
+</div>
+            <div className="col-lg-2 col-md-7 mb-4">
+                <h4 className="title">Dịch Vụ</h4>
+                <ul className="list-unstyled">
+                    <li><a href="#">Điều khoản sử dụng</a></li>
+                    <li><a href="#">Chính sách bảo mật thông tin cá nhân</a></li>
+                    <li><a href="#">Chính sách bảo mật thanh toán</a></li>
+                    <li><a href="#">Giới thiệu Libworld</a></li>
+                    <li><a href="#">Hệ thống trung tâm - nhà sách</a></li>
+                </ul>
             </div>
-          </div>
-          <div className="col-lg-6 col-md-6 col-sm-4">
-            {/* <div className="footer-logo text-right">
-              <a href="index.html"><img src="./assets/images/logo scb.jpg" alt /></a>
-            </div> */}
-          </div>
+            <div className="col-lg-2 col-md-7 mb-4">
+                <h4 className="title">Hỗ Trợ</h4>
+                <ul className="list-unstyled">
+                    <li><a href="#">Chính sách đổi - trả - hoàn tiền</a></li>
+                    <li><a href="#">Chính sách bảo hành - bồi hoàn</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                    <li><a href="#">Chính sách khách sỉ</a></li>
+                </ul>
+            </div>
+            <div className="col-lg-4 col-md-9 mb-4 text-dark">
+                <h4 className="title">Liên Hệ</h4>
+                <p>Địa chỉ: 60-62 Lê Lợi, Q.1, TP. HCM</p>
+                <p>Email: cs@libworld.com.vn</p>
+                <p>Điện thoại: 1900 636 467</p>
+            </div>
         </div>
-      </div>
+
+        <div className="row align-items-center">
+            <div className="col-md-6 mb-3">
+                <div className="d-flex justify-content-start">
+                    <a href="#" className="me-3"><img src="assets/images/appstore.jpg" style={{ height:'50px', width: '150px' }} alt="App Store" /></a>
+                    <a href="#"><img src="assets/images/ggplay.png" style={{ height:'50px', width: '150px' }} alt="Google Play" /></a>
+                </div>
+            </div>
+        </div>
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4544374621546!2d106.62420897412295!3d10.852999257778526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752bee0b0ef9e5%3A0x5b4da59e47aa97a8!2zQ8O0bmcgVmnDqm4gUGjhuqduIE3hu4FtIFF1YW5nIFRydW5n!5e0!3m2!1svi!2s!4v1728542762299!5m2!1svi!2s" width={1296} height={450} style={{border: 0}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+   
+
+        <div className="row mt-4">
+            <div className="col-md-12 text-center">
+                <p className="mb-0" style={{ color: '#aaa' }}>Giấy chứng nhận Đăng ký Kinh doanh số 03041332047 do Sở Kế hoạch và Đầu tư thành phố Hồ Chí Minh cấp ngày 20/12/2005, đăng ký thay đổi lần thứ 10, ngày 20/05/2022.</p>
+            </div>
+        </div>
     </div>
-    {/*Footer bottom end*/}
-  </footer>
+</footer>
 </div>
 
     );

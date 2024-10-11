@@ -61,151 +61,108 @@ function Home() {
   }, []);
   return (
 <div id="main-wrapper">
-  <header className="header-transparent">
-    <div className="header">
-      <div className="header-bottom menu-right">
-        <div className="container">
-          <div className="row align-items-center h-90">
-            {/*Logo start*/}
-            <div className="col-lg-3 col-md-3 col-6 order-lg-1 order-md-1 order-1">
-              <div className="logo">
-                <a href="index.html"><img src="assets/images/logo.png" width="80px" height="88" alt="logo TG shop" /></a>
-              </div>
-            </div>
-            {/*Logo end*/}
-            {/*Menu start*/}
-            <div className="col-lg-6 col-md-6 col-12 order-lg-2 order-md-2 order-3 d-flex justify-content-center">
-              <nav className="main-menu menu-box">
-                <ul className="my-0">
-                  <li className="menu-boxs"><a href="/">Trang chủ</a>
-                  </li>
-                  <li className="menu-boxs"><a href="shop">Sản phẩm</a>
-                  </li>
-                  <li className="menu-boxs"><a href="baiviet">Bài viết</a>
-                  </li>
-                  <li className="menu-boxs"><a href="about.html">Tra cứu</a></li>
-                  <li className="menu-boxs"><a href="contact.html">Liên hệ</a></li>
-                </ul>
-              </nav>
-            </div>
-            {/*Menu end*/}
-            {/*Search Cart Start*/}
-            <div className="col-lg-3 col-md-3 col-6 order-lg-3 order-md-3 order-2 d-flex justify-content-end">
-              <div className="header-user">
-                <a href="/login">
-                  <i className="fa-solid fa-user" />
-                </a>
-              </div>
-              {/* <ul class="ht-us-menu d-flex my-2">
-                              <li class=""><a href="#">
-                                  <img src="assets/images/user1.png" alt="" class="avatar-user">
-                              </a>
-                                  <ul class="ht-dropdown right">
-                                      <li><p class="name-user">Chào mừng rossivo</p></li>
-                                      <li><a href="my-account.html">Thông tin tài khoản</a></li>
-                                      <li><a href="">Đăng xuất</a></li>
-                                  </ul>
-                              </li>
-                          </ul> */}
-              <div className="header-search">
-                <button className="header-search-toggle"><i className="fa fa-search" /></button>
-                <div className="header-search-form">
-                  <form action="#">
-                    <input type="text" placeholder="Nhập thông tin tiềm kiếm ..." />
-                    <button><i className="fa fa-search" /></button>
-                  </form>
-                </div>
-              </div>
-              <div className="header-cart">
-                <a href="/cart"><i className="fa fa-shopping-cart" /></a>
-                {/*Mini Cart Dropdown Start*/}
-                {/*Mini Cart Dropdown End*/}
-              </div>
-            </div>
-            {/*Search Cart End*/}
-          </div>
-          {/*Mobile Menu start*/}
-          <div className="row">
-            <div className="col-12 d-flex d-lg-none">
-              <div className="mobile-menu" />
-            </div>
-          </div>
-          {/*Mobile Menu end*/}
-        </div>
+
+<header className="bg-danger py-3">
+  <div className="container d-flex justify-content-between align-items-center">
+    <a href="#" className="navbar-brand text-white fw-bold fs-3">Libworld</a>
+    <form className="d-flex flex-grow-1 mx-3">
+      <input className="form-control me-2" type="search" placeholder="Tìm kiếm sách" aria-label="Search" />
+      <button className="btn btn-warning" type="submit">Tìm kiếm</button>
+    </form>
+    <div className="d-flex align-items-center">
+      <div className="header-user dropdown me-3">
+        <button className="btn btn-outline-light dropdown-toggle" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="../assets/images/user.png" alt="Tài khoản" style={{width: 20, height: 'auto'}} />
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="accountDropdown">
+          <li><a className="dropdown-item" href="/login">Đăng nhập</a></li>
+          <li><a className="dropdown-item" href="/register">Đăng ký</a></li>
+        </ul>
+      </div>
+
+      <div className="header-cart dropdown me-3">
+        <button className="btn btn-outline-light dropdown-toggle" type="button" id="cartDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="../assets/images/cart.png" alt="Giỏ hàng" style={{width: 20, height: 'auto'}} />
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="cartDropdown">
+          <li><a className="dropdown-item" href="">Giỏ hàng rỗng</a></li>
+        </ul>
+      </div>
+      <div className="header-language dropdown">
+        <button className="btn btn-outline-light dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="../assets/images/iconvn.webp" alt="VN" style={{width: 20, height: 'auto'}} /> 
+          Tiếng Việt
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="languageDropdown">
+          <li>
+            <a className="dropdown-item" href="#">
+              <img src="../assets/images/iconanh.png" alt="EN" style={{width: 20, height: 'auto'}} /> Tiếng Anh
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
-    <div className="header-tab-mobile">
-      <div className="row justify-content-center bg-main">
-        <img src="assets/images/logo2.png" alt className="logo-tab_mobile" />
-      </div>
-      <div className="row bg-main sticky-top">
-        <div className="col-md-12 d-flex w-100 justify-content-between  px-4 py-4 pt-0">
-          <div className="offcanvas offcanvas-start" id="demo">
-            <div className="offcanvas-header">
-              {/* <h1 class="offcanvas-title">Heading</h1> */}
-              <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" />
-            </div>
-            <div className="offcanvas-body">
-              <ul className="menu-hiden">
-                <li><a href="/">Trang chủ</a></li>
-                <li><a href>Blog</a></li>
-                <li><a href="shop">Sản phẩm</a></li>
-                <li><a href>Tra cứu</a></li>
-                <li><a href>Liên hệ</a></li>
-              </ul>
-              {/* <button class="btn btn-secondary" type="button">A Button</button> */}
-            </div>
-          </div>
-          {/* Button to open the offcanvas sidebar */}
-          <div className="btn-open_menu__mobile">
-            <button className="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#demo">
-              <i className="fa-solid fa-bars" />
-            </button>
-          </div>
-          <div className="input-search_mb">
-            <form action>
-              <input type="text" />
-              <input type="submit" defaultValue />
-            </form>
-          </div>
-          <div className="control-tab_mobile">
-            <a href><i className="fa-regular fa-user" /></a>
-            {/* <a href="">
-                          <img src="assets/images/user1.png" alt="" style="height: 39px; height: 39px; border-radius: 50%;">
-                      </a> */}
-            <a href><i className="fa-solid fa-cart-shopping" /></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-  <div id="slider" className="carousel slide mb-60" data-bs-ride="carousel">
-    {/* Indicators/dots */}
-    <div className="carousel-indicators">
-      <button type="button" data-bs-target="#slider" data-bs-slide-to={0} className="active" />
-      <button type="button" data-bs-target="#slider" data-bs-slide-to={1} />
-      <button type="button" data-bs-target="#slider" data-bs-slide-to={2} />
-    </div>
-    {/* The slideshow/carousel */}
-    <div className="carousel-inner">
-      <div className="carousel-item active">
-        <img src="assets/images/6828743.jpg" alt="Los Angeles" className="d-block" style={{width: '100%'}} />
-      </div>
-      <div className="carousel-item">
-        <img src="assets/images/FahasaSaleT3_BlackFriday_Banner_Web_1920x700.jpg" alt="Chicago" className="d-block" style={{width: '100%'}} />
-      </div>
-      <div className="carousel-item">
-        <img src="https://cdn.pixabay.com/photo/2023/10/01/13/54/bird-8287451_640.jpg" alt="New York" className="d-block" style={{width: '100%'}} />
-      </div>
-    </div>
-    {/* Left and right controls/icons */}
-    <button className="carousel-control-prev" type="button" data-bs-target="#slider" data-bs-slide="prev">
-      <span className="carousel-control-prev-icon" />
-    </button>
-    <button className="carousel-control-next" type="button" data-bs-target="#slider" data-bs-slide="next">
-      <span className="carousel-control-next-icon" />
-    </button>
   </div>
+</header>
+
+  {/* Banner/Carousel Section */}
+  <section id="banner">
+    <div className="container mt-3">
+      <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
+        <div className="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={0} className="active" />
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={1} />
+          <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to={2} />
+        </div>
+        <div className="carousel-inner">
+          <div className="carousel-item active">
+            <img src="../assets/images/banner1.webp" className="d-block w-100" alt="First slide" />
+          </div>
+          <div className="carousel-item">
+            <img src="../assets/images/banner2.webp" className="d-block w-100" alt="Second slide" />
+          </div>
+          <div className="carousel-item">
+            <img src="../assets/images/banner3.webp" className="d-block w-100" alt="Third slide" />
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#banner" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#banner" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+      </div>
+    </div>
+  </section>
+  {/* Promotional Section */}
+  <section id="promotions" className="py-4">
+    <div className="container">
+      <div className="row">
+        <div className="col-md-4 mb-3">
+          <div className="promo-card text-center p-3 bg-light border">
+            <h4>Discounts up to 50%</h4>
+            <button className="btn btn-danger mt-2">Shop Now</button>
+          </div>
+        </div>
+        <div className="col-md-4 mb-3">
+          <div className="promo-card text-center p-3 bg-light border">
+            <h4>New Releases</h4>
+            <button className="btn btn-danger mt-2">Explore</button>
+          </div>
+        </div>
+        <div className="col-md-4 mb-3">
+          <div className="promo-card text-center p-3 bg-light border">
+            <h4>Free Shipping</h4>
+            <button className="btn btn-danger mt-2">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <div class="container mt-30 mb-50">
             <div class="catalog-item bg-white bdr-10">
                 <p class="title-cata_sm">Thể loại</p>
@@ -385,6 +342,12 @@ function Home() {
       </div>
     </div>
   </div>
+
+
+
+
+
+
   <div className="guaranteed container">
     <div className="grid wide">
       <div className="row">
@@ -459,7 +422,7 @@ function Home() {
     </div>
   </div>
   <div className="container-fluid">
-    <div className=" banner2">
+    <div className="banner2">
       <div className="container h-100">
         <div className="banner2-content">
           <p>THE BOOK OF <br /> MY LIFE</p>
@@ -491,79 +454,102 @@ function Home() {
       </div>
     </div>
   </div>
-  <footer className="footer-section section">
-    {/*Footer Top start*/}
-    <div className="footer-top section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-45 pb-lg-25 pb-md-15 pb-sm-5 pb-xs-0">
-      <div className="container">
-        <div className="row row-25">
-          {/*Footer Widget start*/}
-          <div className="footer-widget col-lg-4 col-md-6 col-sm-6 col-12 mb-40 mb-xs-35">
-            <img src="assets/images/logo2.png" alt className="logo-footer" />
-            <div className="footer-social">
-              <a href="#" className="twitter"><i className="fa fa-twitter" /></a>
-              <a href="#" className="facebook"><i className="fa fa-facebook" /></a>
-              <a href="#" className="google"><i className="fa fa-google-plus" /></a>
-              <a href="#" className="linkedin"><i className="fa fa-instagram" /></a>
-              <a href="#" className="pinterest"><i className="fa fa-pinterest-p" /></a>
-              <a href="#" className="pinterest"><i className="fa fa-vimeo" /></a>
-            </div>
-          </div>
-          {/*Footer Widget end*/}
-          {/*Footer Widget start*/}
-          <div className="footer-widget col-lg-4 col-md-6 col-sm-6 col-12 mb-40 mb-xs-35">
-            <h4 className="title"><span className="text">Thể loại</span></h4>
-            <ul className="ft-menu">
-              <li><a href="#">New products</a></li>
-              <li><a href="#">Top sellers</a></li>
-              <li><a href="#">Specials</a></li>
-              <li><a href="#">Manufacturers</a></li>
-              <li><a href="#">Suppliers</a></li>
-              <li><a href="#">Specials</a></li>
-              <li><a href="#">Service</a></li>
-            </ul>
-          </div>
-          {/*Footer Widget end*/}
-          {/*Footer Widget start*/}
-          <div className="footer-widget col-lg-4 col-md-6 col-sm-6 col-12 mb-40 mb-xs-35">
-            <h4 className="title"><span className="text">Liên hệ</span></h4>
-            <ul className="address">
-              <li><i className="fa fa-home" /><span>HH2 BacHa building, Tohuu Street Hanoi,
-                  Vietnam</span>
-              </li>
-              <li><i className="fa fa-phone" /><span><a href="#">(08) 123 456 7890</a></span></li>
-              <li><i className="fa fa-envelope-o" /><span><a href="#">yourmail@domain.com</a></span>
-              </li>
-            </ul>
-            <div className="payment-box mt-15 mb-15">
-              <a href="/"><img src="./assets/images/logo.png" width="80px" height="80" /></a>
-            </div>
-          </div>
-          {/*Footer Widget end*/}
-        </div>
-      </div>
-    </div>
-    {/*Footer Top end*/}
-    {/*Footer bottom start*/}
-    <div className="footer-bottom section">
-      <div className="container ft-border pt-40 pt-xs-20 pb-xs-20">
-        <div className="row justify-content-between align-items-center">
-          <div className="col-lg-6 col-md-6 col-sm-8">
-            <div className="copyright text-left">
-              <p>Copyright ©2019 <a href="#">Theface</a>. All rights reserved.</p>
-            </div>
-          </div>
-          <div className="col-lg-6 col-md-6 col-sm-4">
-            {/* <div className="footer-logo text-right">
-              <a href="/"><img src="./assets/images/logo.png" width="50" height="50" /></a>
-            </div> */}
-          </div>
-        </div>
-      </div>
-    </div>
-    {/*Footer bottom end*/}
-  </footer>
+  
+  <div className="fixed-icons">
+  <a href="tel:+84123456789" className="icon-phone">
+    <img src="../assets/images/phone.png" alt="Phone" />
+  </a>
+  <a href="#" className="icon-zalo">
+    <img src="../assets/images/messenger.png" alt="messenger" />
+  </a>
+  <a href="#" className="icon-facebook">
+    <img src="../assets/images/facebook.png" alt="Facebook" />
+  </a>
+  <a href="#" className="icon-tiktok">
+    <img src="../assets/images/tiktok.png" alt="TikTok" />
+  </a>
 </div>
+  <footer className="footer-section" style={{ backgroundColor: "#f8f9fa", padding: "40px 0" }}>
+  <div className="row mb-4">
+  <div className="col-md-12 text-center" style={{ backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '5px' }}>
+    <form className="d-flex justify-content-center align-items-center">
+      <h4 className="mb-0 me-3" style={{ color: '#FF7F00' }}>Đăng ký nhận bản tin</h4>
+      <input
+        type="email"
+        className="form-control me-2"
+        placeholder="Nhập địa chỉ email của bạn"
+        style={{ borderRadius: '5px', border: '1px solid #ccc', width: '300px' }}
+      />
+      <button className="btn" style={{ backgroundColor: '#FF7F00', color: '#fff', borderRadius: '5px' }} type="submit">
+        Đăng ký
+      </button>
+    </form>
+  </div>
+</div>
+<div className="container">
+        <div className="row">
+        <div className="col-lg-4 col-md-7 mb-4">
+    <div className="footer-logo color-black text-dark">
+        <h1><a href="/" className="text-dark">Libworld.com</a></h1>
+        <p>Lầu 5, 387-389 Hai Bà Trưng Quận 3 TP HCM</p>
+        <p>Công Ty Cổ Phần Phát Hành Sách TP HCM - LIBWORLD</p>
+        <p>60 - 62 Lê Lợi, Quận 1, TP. HCM, Việt Nam</p>
+        <p>Libworld.com nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả hệ thống Libworld trên toàn quốc.</p>
+        <div className="footer-social d-flex">
+            <a href="#" className="me-3"><i className="fa fa-facebook" /></a>
+            <a href="#" className="me-3"><i className="fa fa-twitter" /></a>
+            <a href="#" className="me-3"><i className="fa fa-instagram" /></a>
+            <a href="#"><i className="fa fa-youtube" /></a>
+        </div>
+    </div>
+</div>
+            <div className="col-lg-2 col-md-7 mb-4">
+                <h4 className="title">Dịch Vụ</h4>
+                <ul className="list-unstyled">
+                    <li><a href="#">Điều khoản sử dụng</a></li>
+                    <li><a href="#">Chính sách bảo mật thông tin cá nhân</a></li>
+                    <li><a href="#">Chính sách bảo mật thanh toán</a></li>
+                    <li><a href="#">Giới thiệu Libworld</a></li>
+                    <li><a href="#">Hệ thống trung tâm - nhà sách</a></li>
+                </ul>
+            </div>
+            <div className="col-lg-2 col-md-7 mb-4">
+                <h4 className="title">Hỗ Trợ</h4>
+                <ul className="list-unstyled">
+                    <li><a href="#">Chính sách đổi - trả - hoàn tiền</a></li>
+                    <li><a href="#">Chính sách bảo hành - bồi hoàn</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                    <li><a href="#">Chính sách khách sỉ</a></li>
+                </ul>
+            </div>
+            <div className="col-lg-4 col-md-9 mb-4 text-dark">
+                <h4 className="title">Liên Hệ</h4>
+                <p>Địa chỉ: 60-62 Lê Lợi, Q.1, TP. HCM</p>
+                <p>Email: cs@libworld.com.vn</p>
+                <p>Điện thoại: 1900 636 467</p>
+            </div>
+        </div>
 
+        <div className="row align-items-center">
+            <div className="col-md-6 mb-3">
+                <div className="d-flex justify-content-start">
+                    <a href="#" className="me-3"><img src="assets/images/appstore.jpg" style={{ height:'50px', width: '150px' }} alt="App Store" /></a>
+                    <a href="#"><img src="assets/images/ggplay.png" style={{ height:'50px', width: '150px' }} alt="Google Play" /></a>
+                </div>
+            </div>
+        </div>
+
+<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.4544374621546!2d106.62420897412295!3d10.852999257778526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752bee0b0ef9e5%3A0x5b4da59e47aa97a8!2zQ8O0bmcgVmnDqm4gUGjhuqduIE3hu4FtIFF1YW5nIFRydW5n!5e0!3m2!1svi!2s!4v1728542762299!5m2!1svi!2s" width={1296} height={450} style={{border: 0}} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+   
+
+        <div className="row mt-4">
+            <div className="col-md-12 text-center">
+                <p className="mb-0" style={{ color: '#aaa' }}>Giấy chứng nhận Đăng ký Kinh doanh số 03041332047 do Sở Kế hoạch và Đầu tư thành phố Hồ Chí Minh cấp ngày 20/12/2005, đăng ký thay đổi lần thứ 10, ngày 20/05/2022.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</div>
 
   );
 }

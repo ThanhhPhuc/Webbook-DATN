@@ -12,7 +12,7 @@ import Login from './components/Login';
 import BookList from './components/BookList';
 // import EditBook from './components/EditBook';
 import Cart from './components/Cart';
-
+import Admin from './components/Admin';
 
 function App() {
   return (
@@ -31,6 +31,8 @@ function App() {
         {/* <Route path="/edit/:id" element={<EditBook />} /> */}
         <Route path="/delete/:id" element={<DeleteBook />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/admin" element={<Admin />} />
+
       </Routes>
     </Router>
                </CartProvider>
