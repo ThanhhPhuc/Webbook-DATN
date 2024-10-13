@@ -1,31 +1,56 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { useNavigate, Link } from 'react-router-dom'; // Thêm Link từ react-router-dom
+import { useNavigate, Link } from 'react-router-dom';
 
 const Register = () => {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [address, setAddress] = useState('');
-    const [phone, setPhone] = useState('');
-    const [permissions, setPermissions] = useState([]);
-    const { register } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
 
-    const handleRegister = async (e) => {
-        e.preventDefault();
-        await register({ username, password, email, address, phone, permissions });
-    };
+  const handleRegister = async (e) => {
+      e.preventDefault();
 
-    const handleLoginClick = () => {
-        navigate('/login');
-    };
+      try {
+          const response = await fetch('http://localhost:5000/api/auth/register', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  username,
+                  password,
+                  email,
+                  diachi: address, // Thay đổi để phù hợp với backend
+                  dienthoai: phone,
+              }),
+          });
 
-    const handleBackClick = () => {
-        navigate('/');
-    };
+          const data = await response.json();
 
-    return (
+          if (response.ok) {
+              alert('Đăng ký thành công!');
+              navigate('/login');
+          } else {
+              alert(data.message || 'Đăng ký thất bại');
+          }
+      } catch (error) {
+          console.error('Đã có lỗi:', error);
+          alert('Có lỗi xảy ra, vui lòng thử lại sau.');
+      }
+  };
+
+  const handleLoginClick = () => {
+      navigate('/login');
+  };
+
+  const handleBackClick = () => {
+      navigate('/');
+  };
+
+  return (
         <div id="main-wrapper">
  <header className="bg-danger py-3">
   <div className="container d-flex justify-content-between align-items-center">
@@ -72,75 +97,121 @@ const Register = () => {
 
     {/* -----------------------------End Form login------------------------- */}
     <div className="form-register container-sm">
-      <div className="fl-left">
-        <h1 className="name-lg">Đăng kí</h1>
-        <form action>
-          <div className="rg-user_name">
-            <div className="rg-user_name__input">
-              <div className="input-group">
-                <input required type="text" name="text" autoComplete="off" className="input input-login-register input-user_name" />
-                <label className="user-label">Tên đăng nhập</label>
-                <i className="fa-solid fa-user" />
-              </div>
+            <div className="fl-left">
+                <h1 className="name-lg">Đăng kí</h1>
+                <form onSubmit={handleRegister}>
+                    <div className="rg-user_name">
+                        <div className="rg-user_name__input">
+                            <div className="input-group">
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="username" 
+                                    autoComplete="off" 
+                                    className="input input-login-register input-user_name" 
+                                    value={username} // Liên kết giá trị với state
+                                    onChange={(e) => setUsername(e.target.value)} // Cập nhật state
+                                />
+                                <label className="user-label">Tên đăng nhập</label>
+                                <i className="fa-solid fa-user" />
+                            </div>
+                        </div>
+                        <div className="err-user_name">
+                            <small className="hide">Vui lòng nhập tên đăng nhập</small>
+                        </div>
+                    </div>
+                    <div className="rg-password">
+                        <div className="rg-password__input">
+                            <div className="input-group">
+                                <input 
+                                    required 
+                                    type="password" 
+                                    name="password" 
+                                    autoComplete="off" 
+                                    className="input input-login-register input-password rg-password_input" 
+                                    value={password} // Liên kết giá trị với state
+                                    onChange={(e) => setPassword(e.target.value)} // Cập nhật state
+                                />
+                                <label className="user-label">Mật khẩu</label>
+                                <i className="fa-solid fa-eye showPassword" />
+                            </div>
+                        </div>
+                        <div className="err-password">
+                            <small className="hide rg-err">Mật khẩu không đủ 8 kí tự</small>
+                        </div>
+                    </div>
+                    <div className="rg-email">
+                        <div className="rg-email__input">
+                            <div className="input-group">
+                                <input 
+                                    required 
+                                    type="email" 
+                                    name="email" 
+                                    autoComplete="off" 
+                                    className="input input-login-register input-email" 
+                                    value={email} // Liên kết giá trị với state
+                                    onChange={(e) => setEmail(e.target.value)} // Cập nhật state
+                                />
+                                <label className="user-label">Email</label>
+                                <i className="fa-solid fa-envelope" />
+                            </div>
+                        </div>
+                        <div className="err-user_name">
+                            <small className="hide">Vui lòng nhập email</small>
+                        </div>
+                    </div>
+                    <div className="rg-diachi">
+                        <div className="rg-diachi__input">
+                            <div className="input-group">
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="diachi" 
+                                    autoComplete="off" 
+                                    className="input input-login-register input-diachi" 
+                                    value={address} // Liên kết giá trị với state
+                                    onChange={(e) => setAddress(e.target.value)} // Cập nhật state
+                                />
+                                <label className="user-label">Địa chỉ</label>
+                                <i className="fa-solid fa-map-marker-alt" />
+                            </div>
+                        </div>
+                        <div className="err-user_name">
+                            <small className="hide">Vui lòng nhập địa chỉ</small>
+                        </div>
+                    </div>
+
+                    <div className="rg-dienthoai">
+                        <div className="rg-dienthoai__input">
+                            <div className="input-group">
+                                <input 
+                                    required 
+                                    type="text" 
+                                    name="dienthoai" 
+                                    autoComplete="off" 
+                                    className="input input-login-register input-dienthoai" 
+                                    value={phone} // Liên kết giá trị với state
+                                    onChange={(e) => setPhone(e.target.value)} // Cập nhật state
+                                />
+                                <label className="user-label">Số điện thoại</label>
+                                <i className="fa-solid fa-phone" />
+                            </div>
+                        </div>
+                        <div className="err-user_name">
+                            <small className="hide">Vui lòng nhập số điện thoại</small>
+                        </div>
+                    </div>
+                    <div className="btn-register">
+                        <input type="submit" defaultValue="Đăng kí" />
+                    </div>
+                </form>
             </div>
-            <div className="err-user_name">
-              <small className="hide">Vui lòng nhập tên đăng nhập</small>
+            <div className="fl-right">
+                <h1>Bạn đã có tài khoản ?</h1>
+                <div onClick={handleLoginClick} style={{ cursor: 'pointer' }} className="login-now">Đăng nhập ngay !!!</div>
             </div>
-          </div>
-          <div className="rg-email">
-            <div className="rg-email__input">
-              <div className="input-group">
-                <input required type="text" name="text" autoComplete="off" className="input input-login-register input-email" />
-                <label className="user-label">Email</label>
-                <i className="fa-solid fa-envelope" />
-              </div>
-            </div>
-            <div className="err-user_name">
-              <small className="hide">Vui lòng nhập email</small>
-            </div>
-          </div>
-          <div className="rg-password">
-            <div className="rg-password__input">
-              <div className="input-group">
-                <input required type="password" name="text" autoComplete="off" className="input input-login-register input-password rg-password_input" />
-                <label className="user-label">Mật khẩu</label>
-                <i className="fa-solid fa-eye showPassword" />
-              </div>
-            </div>
-            <div className="err-password">
-              <small className="hide rg-err">Mật khẩu không đủ 8 kí tự</small>
-            </div>
-          </div>
-          <div className="rg-password_confirm">
-            <div className="rg-passwordConfirm__input">
-              <div className="input-group">
-                <input required type="password" name="text" autoComplete="off" className="input input-login-register input-password rg-password_confirm__input" />
-                <label className="user-label">Nhập lại mật khẩu</label>
-                <i className="fa-solid fa-eye showPassword" />
-                {/* <i class="fa-regular fa-eye"></i> */}
-              </div>
-            </div>
-            <div className="err-password">
-              <small className="hide rg-err__2">Mật khẩu không trùng khớp</small>
-            </div>
-          </div>
-          <div className="btn-register">
-            <input type="submit" defaultValue="Đăng kí" />
-          </div>
-          <div className="d-xxl-none d-flex justify-content-center align-items-center mt-2">
-            Bạn đã có tài khoản
-            <div onClick={handleLoginClick} 
-      style={{cursor: 'pointer'}} className="login login-now ml-2 ">Đăng nhập ngay !</div>
-          </div>
-        </form>
-      </div>
-      <div className="fl-right">
-        {/* <img src="/asset/img/sl1.jpg" alt=""> */}
-        <h1>Bạn đã có tài khoản ?</h1>
-        <div onClick={handleLoginClick} 
-      style={{cursor: 'pointer',  }} className="login-now">Đăng nhập ngay !!!</div>
-      </div>
-    </div>
+        </div>
+
   </div>
   <div className="fixed-icons">
   <a href="tel:+84123456789" className="icon-phone">

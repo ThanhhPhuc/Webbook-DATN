@@ -1,33 +1,28 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+  import React, { useState, useContext } from 'react';
+  import { AuthContext } from '../context/AuthContext';
+  import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
-    const navigate = useNavigate();
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const { login } = useContext(AuthContext);
+  const Login = () => {
+      const navigate = useNavigate();
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
+      const { login } = useContext(AuthContext); // Lấy hàm login từ AuthContext
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            await login(username, password);
-            setError('');
-        } catch (error) {
-            setError(error.error);
-        }
-    };
+      const handleLogin = async (e) => {
+          e.preventDefault();
+          
+          // Gọi hàm login từ AuthContext
+          await login(email, password); // Chuyển email và mật khẩu vào hàm login
 
-    const handleRegisterClick = () => {
-        navigate('/register');
-    };
-    const handleBackClick = () => {
-        navigate('/');
-    };
+          // Sau khi đăng nhập thành công, bạn có thể điều hướng người dùng nếu cần
+          // (Tùy thuộc vào logic trong AuthContext)
+      };
 
-    return (
+      const handleRegisterClick = () => {
+          navigate('/register'); // Điều hướng đến trang đăng ký
+      };
+
+      return (
 <div id="main-wrapper">
 <header className="bg-danger py-3">
   <div className="container d-flex justify-content-between align-items-center">
@@ -70,55 +65,61 @@ const Login = () => {
 </header>
   <div className="container-login">
     {/*-------------------------------- Form login-------------------------- */}
-    <div className="form-login container-sm ">
-      <div className="fl-left">
-        <h1 className="name-lg">Đăng nhập</h1>
-        <form action>
-          <div className="lg-user_name">
-            <div className="lg-user_name__input">
-              <div className="input-group">
-                <input required type="text" name="text" autoComplete="off" className="input input-login-register input-user_name" />
-                <label className="user-label">Tên đăng nhập</label>
-                <i className="fa-solid fa-user" />
-              </div>
+    <div className="form-login container-sm">
+            <div className="fl-left">
+                <h1 className="name-lg">Đăng nhập</h1>
+                <form onSubmit={handleLogin}>
+                    <div className="lg-user_name">
+                        <div className="lg-user_name__input">
+                            <div className="input-group">
+                                <input
+                                    required
+                                    type="text"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    autoComplete="off"
+                                    className="input input-login-register input-user_name"
+                                />
+                                <label className="user-label">Email</label>
+                                <i className="fa-solid fa-user" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="lg-password">
+                        <div className="lg-password__input">
+                            <div className="input-group">
+                                <input
+                                    required
+                                    type="password"
+                                    name="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    autoComplete="off"
+                                    className="input input-login-register input-password"
+                                />
+                                <label className="user-label">Mật khẩu</label>
+                                <i className="fa-solid fa-eye showPassword" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="fg-pass">
+                        <a href="#">Quên mật khẩu ?</a>
+                    </div>
+                    <div className="btn-login">
+                        <input type="submit" defaultValue="Đăng nhập" />
+                    </div>
+                    <div className="d-xxl-none d-flex justify-content-center align-items-center mt-2">
+                        Bạn chưa có tài khoản
+                        <div onClick={handleRegisterClick} style={{ cursor: 'pointer' }} className="register-now ml-2">Đăng ký ngay !</div>
+                    </div>
+                </form>
             </div>
-            {/* <div class="err-user_name">
-                          <small class="hide">Vui lòng nhập tên đăng nhập</small>
-                      </div> */}
-          </div>
-          <div className="lg-password">
-            <div className="lg-password__input">
-              <div className="input-group">
-                <input required type="password" name="text" autoComplete="off" className="input input-login-register input-password" />
-                <label className="user-label">Mật khẩu</label>
-                <i className="fa-solid fa-eye showPassword" />
-                {/* <i class="fa-regular fa-eye"></i> */}
-              </div>
+            <div className="fl-right">
+                <h1>Bạn chưa có tài khoản ?</h1>
+                <div onClick={handleRegisterClick} style={{ cursor: 'pointer' }} className="register-now">Đăng ký ngay !</div>
             </div>
-            <div className="err-password">
-              <small className="hide">Tên tài khoản hoặc Mật khẩu sai</small>
-            </div>
-          </div>
-          <div className="fg-pass">
-            <a href>Quên mật khẩu ?</a>
-          </div>
-          <div className="btn-login">
-            <input type="submit" defaultValue="Đăng nhập" />
-          </div>
-          <div className="d-xxl-none d-flex justify-content-center align-items-center mt-2">
-            Bạn chưa có tài khoản
-            <div onClick={handleRegisterClick} 
-      style={{cursor: 'pointer'}} className="register-now ml-2 ">Đăng ký ngay !</div>
-          </div>
-        </form>
-      </div>
-      <div className="fl-right">
-        {/* <img src="/asset/img/sl1.jpg" alt=""> */}
-        <h1>Bạn chưa có tài khoản ?</h1>
-        <div onClick={handleRegisterClick} 
-      style={{cursor: 'pointer'}} className="register-now">Đăng ký ngay !</div>
-      </div>
-    </div>
+        </div>
     {/* -----------------------------End Form login------------------------- */}
 
   </div>
