@@ -61,7 +61,7 @@ function Admintacgia() {
       <div className="row">
         <div className="col-md-2 bg-light p-3">
           <div className="libworld-logo text-center mb-3">
-            <h1><span>Libworld</span><span className="text-white"> SHOP</span></h1>
+          <h1><span>Libworld</span></h1>
           </div>
           <hr />
           <nav>
@@ -85,7 +85,7 @@ function Admintacgia() {
                 <a href="/admin" className="nav-link text-dark"><i className="bi bi-people-fill me-2"></i>Quản lý người dùng</a>
               </li>
               <li className="nav-item mb-2">
-                <a href="#" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
+                <a href="/adminorder" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
               </li>
               <li className="nav-item mb-2">
                 <a href="#" className="nav-link text-dark "><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a>
@@ -101,7 +101,6 @@ function Admintacgia() {
         <div className="col-md-10">
           <div className="admin-header bg-primary text-white p-3 mb-3">
             <p>Chào mừng đến trang quản trị tác giả của Nhà sách Libworld</p>
-            <button className="btn btn-outline-light" onClick={handleLogout}>Đăng xuất</button>
           </div>
 
           <div className="admin-content p-3">

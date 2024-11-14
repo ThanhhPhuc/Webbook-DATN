@@ -19,6 +19,11 @@ import PasswordRecovery from './components/PasswordRecovery';
 import AdminComment from './components/AdminComment';
 import i18n from './components/i18n';
 import Category from './components/Category';
+import Checkout from './components/Checkout';
+import PaymentSuccess from './components/PaymentSuccess';
+import OrderTable from './components/OrderTable';
+import OrderDetail from './components/OrderDetail';
+import ProfileOrderDetail from './components/ProfileOrderDetail';
 function App() {
   return (
     <Router>
@@ -41,6 +46,11 @@ function App() {
             <Route path="/quenmatkhau" element={<PasswordRecovery />} />
             <Route path="/admincomment" element={<AdminComment />} />
             <Route path="/theloai/:categoryId" element={<Category />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/paymentsuccess" element={<PaymentSuccess />} />
+            <Route path="/adminorder" element={<OrderTable />} />
+            <Route path="/order/:orderId" element={<OrderDetail />} /> {/* Cấu hình đúng route cho OrderDetail */}
+            <Route path="/profile/order/:orderId" element={<ProfileOrderDetail />} />
           </Routes>
         </CartProvider>
       </AuthProvider>

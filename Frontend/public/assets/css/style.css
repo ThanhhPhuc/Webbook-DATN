@@ -4050,8 +4050,8 @@ ul.cart-items li {
 /*-- Product --*/
 .single-product .product-img {
   position: relative;
-  /* overflow: hidden; */
-  margin-bottom: 25px;
+
+
 }
 
 .single-product .product-img a {

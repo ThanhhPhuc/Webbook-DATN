@@ -43,7 +43,7 @@ const Header = () => {
                     {isAuthenticated ? (
                         <div className="dropdown">
                             <button className="btn btn-outline-light dropdown-toggle me-4" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src={user.avatar || "../assets/images/iconuser.jpg"} alt="Tài khoản" style={{ width: 20, height: 'auto', borderRadius: '50%' }} />
+                                <img src={user.avatar || "/../assets/images/iconuser.jpg"} alt="Tài khoản" style={{ width: 20, height: 'auto', borderRadius: '50%' }} />
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li className="dropdown-item text-center"><b>{user.username}</b></li>
@@ -56,7 +56,7 @@ const Header = () => {
                     ) : (
                         <div className="dropdown">
                             <button className="btn btn-outline-light dropdown-toggle me-4" type="button" id="accountDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="../assets/images/user.png" alt="Tài khoản" style={{ width: 20, height: 'auto' }} />
+                                <img src="/../assets/images/user.png" alt="Tài khoản" style={{ width: 20, height: 'auto' }} />
                             </button>
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
                                 <li><Link className="dropdown-item" to="/login">{t('header.login')}</Link></li>
@@ -67,7 +67,7 @@ const Header = () => {
                     <Link to="/cart">
                         <div className="header-cart me-4">
                             <button className="btn btn-outline-light">
-                                <img src="../assets/images/cart.png" alt={t('header.cart')} style={{ width: 20, height: 'auto' }} />
+                                <img src="/../assets/images/cart.png" alt={t('header.cart')} style={{ width: 20, height: 'auto' }} />
                             </button>
                         </div>
                     </Link>
@@ -76,8 +76,8 @@ const Header = () => {
                             {i18n.language === 'vi' ? "Tiếng Việt" : "English"}
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="languageDropdown">
-                            <li><button className="dropdown-item" onClick={() => changeLanguage('en')}><img src="../assets/images/iconanh.png" alt="VN" style={{ width: 20, height: 'auto' }} /> English</button></li>
-                            <li><button className="dropdown-item" onClick={() => changeLanguage('vi')}><img src="../assets/images/iconvn.webp" alt="EN" style={{ width: 20, height: 'auto' }} />Tiếng Việt</button></li>
+                            <li><button className="dropdown-item" onClick={() => changeLanguage('en')}><img src="/../assets/images/iconanh.png" alt="VN" style={{ width: 20, height: 'auto' }} /> English</button></li>
+                            <li><button className="dropdown-item" onClick={() => changeLanguage('vi')}><img src="/../assets/images/iconvn.webp" alt="EN" style={{ width: 20, height: 'auto' }} />Tiếng Việt</button></li>
                         </ul>
                     </div>
                 </div>

@@ -169,8 +169,12 @@ const ProductDetail = () => {
                       </div>
                       <div className="col-8 col-sm-8 col-lg-10">
                         <p className="mt-content">
-                          - Nội dung: {product.description} <br />
-                          - Thể loại: {product.category?.name}
+                          - Tên: {product.title} <br/>
+                          - Thể loại: {category ? category.name : 'Không có thể loại'} <br/>
+                          - Tác giả: {author ? author.name : 'Không có tác giả'} <br/>
+                          - NXB: {publisher ? publisher.name : 'Không có nhà xuất bản'} <br/>
+                          - Năm XB: {product.namXB} <br />
+                          - Mô tả: {product.description} <br /> 
                         </p>
                       </div>
                     </div>

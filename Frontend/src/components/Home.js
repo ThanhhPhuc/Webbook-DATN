@@ -255,16 +255,17 @@ function Home() {
             {books.map((book) => (
               <div key={book._id} className="px-3">
                 <div className="shop-card">
-                  <figure className="card-banner img-holder" style={{ width: 300, height: 260 }}>
-                    <img
-                      src={book.image}
-                      width={300}
-                      height={260}
-                      loading="lazy"
-                      alt={book.title || 'Book image'}
-                      className="img-cover"
-                    />
-                  </figure>
+                <figure className="card-banner img-holder" style={{ width: 300, height: 300 }}>
+  <img
+    src={book.image}
+    width={250} // Cập nhật chiều rộng
+    height={300} // Cập nhật chiều cao
+    loading="lazy"
+    alt={book.title || 'Book image'}
+    className="img-cover"
+    style={{ objectFit: 'cover' }} // Đảm bảo hình ảnh được cắt đúng tỉ lệ
+  />
+</figure>
                   <div className="card-content">
                     <h3 className="h3">
                       <Link to={`/sach/${book._id}`} >  <p className="box-name">{book.title || 'Untitled Book'}</p></Link>
@@ -523,9 +524,9 @@ function Home() {
 
     </div>
     </div>
-  );
-}
+    );
+  }
 
 
-export default Home;
+  export default Home;
 

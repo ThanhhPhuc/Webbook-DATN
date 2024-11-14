@@ -3,39 +3,71 @@ import API from '../api';
 import { Link, useNavigate } from 'react-router-dom';
 import { CartContext } from '../context/CartContext';
 import Header from './Header';
+
 const BookList = () => {
-  const [products, setProducts] = useState([]);
-  const [genres, setGenres] = useState([]);
+  const [products, setProducts] = useState([]); // Danh sách sách
+  const [genres, setGenres] = useState([]); // Danh sách thể loại
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { addToCart } = useContext(CartContext);
   const navigate = useNavigate();
 
+  // Fetching products and genres
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchProductsAndGenres = async () => {
+      setLoading(true);
       try {
-        const res = await API.get('http://localhost:5000/api/sach');
-        setProducts(res.data);
+        // Fetch products
+        const productRes = await API.get('http://localhost:5000/api/sach');
+        if (Array.isArray(productRes.data)) {
+          setProducts(productRes.data);
+        } else {
+          throw new Error('Dữ liệu sản phẩm không hợp lệ.');
+        }
+
+        // Fetch genres
+        const genreRes = await API.get('http://localhost:5000/api/theloai');
+        if (Array.isArray(genreRes.data)) {
+          setGenres(genreRes.data);
+        } else {
+          throw new Error('Dữ liệu thể loại không hợp lệ.');
+        }
       } catch (error) {
-        console.error('Failed to fetch products', error);
+        console.error('Failed to fetch data:', error);
+        setError(error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
-    const fetchGenres = async () => {
-      try {
-        const res = await API.get('http://localhost:5000/api/theloai');
-        setGenres(res.data);
-      } catch (error) {
-        console.error('Failed to fetch genres', error);
-      }
-    };
-
-    fetchProducts();
-    fetchGenres();
+    fetchProductsAndGenres();
   }, []);
 
+  // Fetch products by genre when selected
+  const handleGenreClick = async (genreId) => {
+    setLoading(true);
+    try {
+        const productRes = await API.get(`http://localhost:5000/api/sach/theloai/${genreId}`);
+        // Kiểm tra xem dữ liệu có thuộc tính books không
+        if (Array.isArray(productRes.data.books)) {
+            setProducts(productRes.data.books);
+        } else {
+            throw new Error('Dữ liệu sản phẩm theo thể loại không hợp lệ.');
+        }
+    } catch (error) {
+        console.error('Error fetching books by genre:', error);
+        setError(error.message);
+    } finally {
+        setLoading(false);
+    }
+};
+
+  // Handle add to cart action
   const handleAddToCart = async (book) => {
     if (book && book.inventory > 0) {
       try {
         await addToCart("670d2d7f4f9223989b3f51ed", book._id, 1); // Example userId and quantity
+        alert('Sản phẩm đã được thêm vào giỏ hàng!');
         navigate('/cart');
       } catch (error) {
         console.error('Error adding product to cart:', error);
@@ -46,10 +78,19 @@ const BookList = () => {
     }
   };
 
+  // Loading state and error handling
+  if (loading) {
+    return <div>Đang tải sản phẩm...</div>;
+  }
+
+  if (error) {
+    return <div>{`Có lỗi xảy ra: ${error}`}</div>;
+  }
+
   return (
     <div>
       <div id="main-wrapper">
- <Header/>
+        <Header />
         <div className="container-fluid">
           <div className="container">
             <nav aria-label="breadcrumb">
@@ -69,10 +110,13 @@ const BookList = () => {
                 <div className="common-sidebar-widget">
                   <h3 className="sidebar-title">Thể loại</h3>
                   <ul className="sidebar-list">
-                    {genres.map((genre, index) => (
-                      <li key={index}><a href="#">{genre.name}</a></li>
-                    ))}
-                  </ul>
+                  {genres.length > 0 ? genres.map((genre) => (
+                          <li key={genre._id} onClick={() => handleGenreClick(genre._id)}>
+                            <a href="#">{genre.name}</a>
+                          </li>
+                        ))
+                      : <li>Không có thể loại</li>}
+                 </ul>
                 </div>
                 <div className="common-sidebar-widget">
                   <div className="single-banner">
@@ -82,7 +126,6 @@ const BookList = () => {
                   </div>
                 </div>
               </div>
-
               <div className="col-lg-9">
                 <div className="row">
                   <div className="col-12">
@@ -91,7 +134,7 @@ const BookList = () => {
                         <div id="grid" className="tab-pane fade active show">
                           <div className="product-grid-view">
                             <div className="row">
-                              {products.map((book, index) => (
+                              {products.length > 0 ? products.map((book, index) => (
                                 <div className="col-lg-4 col-md-6 col-sm-6 col-6" key={index}>
                                   <div className="single-product mb-30 mt-30">
                                     <figure className="card-banner img-holder" style={{ width: 280, height: 300 }}>
@@ -109,6 +152,7 @@ const BookList = () => {
                                       <Link to={`/sach/${book._id}`} className="card-title">
                                         {book.title || 'Untitled Book'}
                                       </Link>
+                                      
                                     </div>
                                     <div className="product-content">
                                       <h4 className="price">
@@ -124,19 +168,22 @@ const BookList = () => {
                                     </div>
                                   </div>
                                 </div>
-                              ))}
+                              )) : <div className="col-12">Không có sản phẩm nào</div>}
                             </div>
                           </div>
-                          
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+
             </div>
           </div>
         </div>
+ 
+ 
+    
         <div className="fixed-icons">
         <a href="tel:+84123456789" className="icon-phone">
           <img src="../assets/images/phone.png" alt="Phone" />

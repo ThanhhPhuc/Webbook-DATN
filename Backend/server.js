@@ -12,13 +12,19 @@ const nxbRoutes = require('./routes/nxb');
 const hoadonRoutes = require('./routes/hoadon');
 const authRoutes = require('./routes/auth');
 const cartRoutes = require('./routes/cart');
+const orderRoutes = require('./routes/order');  // Đảm bảo import đúng file order
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost:27017/ApiFrame2');
-
+// mongoose.connect('mongodb://localhost:27017/ApiFrame2');
+mongoose.connect('mongodb://localhost:27017/ApiFrame2', { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
+})
+.then(() => console.log('Connected to MongoDB'))
+.catch(err => console.log('MongoDB connection error:', err));
 
 app.use('/api/sach', sachRoutes);
 app.use('/api/tacgia', tacgiaRoutes);
@@ -28,6 +34,7 @@ app.use('/api/nxb', nxbRoutes);
 app.use('/api/hoadon', hoadonRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/order', orderRoutes);  // Đảm bảo sử dụng đúng route order
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

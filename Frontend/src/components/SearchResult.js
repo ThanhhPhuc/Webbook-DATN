@@ -78,7 +78,7 @@ const handleSearchSubmit = (event) => {
   return (
 <div id="main-wrapper">
 <Header/>
-
+<br/>
     <div className="container">
       <h2>Sách mà bạn muốn kiếm: "{query}"</h2>
       <div className="row">
@@ -93,6 +93,7 @@ const handleSearchSubmit = (event) => {
                     <img src={product.image} alt={product.title} />
                   </Link>
                 </div>
+                <br/>
                 <div className="product-content">
                   <h3><Link to={`/sach/${product._id}`}>{product.title}</Link></h3>
                   <h4 className="price"><span className="new">{product.price}<sup>đ</sup></span></h4>

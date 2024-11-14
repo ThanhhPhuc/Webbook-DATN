@@ -42,4 +42,18 @@ router.delete('/:id', async (req, res) => {
   res.send('Customer deleted');
 });
 
+router.delete('/delete-account', async (req, res) => {
+  const { userId } = req.body;
+
+  try {
+      const customer = await Khachhang.findByIdAndDelete(userId);
+      if (!customer) {
+          return res.status(404).send('Customer not found');
+      }
+      res.send('Customer deleted');
+  } catch (error) {
+      console.error('Error deleting account:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
 module.exports = router;

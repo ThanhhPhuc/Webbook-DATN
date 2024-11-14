@@ -1,23 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Header from './Header';
+import { AuthContext } from '../context/AuthContext';
+
 const Cart = () => {
-  const [cart, setCart] = useState([]); // State to store the cart items
-  const [voucherCode, setVoucherCode] = useState(''); // State for the voucher code input
-  const [discount, setDiscount] = useState(0); // State to store the discount amount
-  const [shippingFee] = useState(30000); // Fixed shipping fee (example)
+  const { isAuthenticated } = useContext(AuthContext); // Lấy isAuthenticated từ AuthContext
+  const [cart, setCart] = useState([]);
+  const [voucherCode, setVoucherCode] = useState('');
+  const [discount, setDiscount] = useState(0);
+  const [shippingFee] = useState(30000);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const userId = "670d2d7f4f9223989b3f51ed"; // Mocked user ID
+  const userId = "670d2d7f4f9223989b3f51ed";
   
-  // Fetch cart data
+  const navigate = useNavigate(); // Initialize navigate function
+
   useEffect(() => {
     const fetchCart = async () => {
       try {
         setLoading(true);
         const res = await axios.get(`http://localhost:5000/api/cart/${userId}`);
-        setCart(res.data); // Set cart state with fetched data
+        setCart(res.data);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching cart:', error);
@@ -27,59 +31,64 @@ const Cart = () => {
     };
     fetchCart();
   }, [userId]);
-  
-  // Function to delete item from cart
+
   const deleteItemCart = async (productId) => {
     try {
       const res = await axios.delete(`http://localhost:5000/api/cart/${userId}/remove/${productId}`);
-      setCart(res.data); // Update the cart after deletion
+      setCart(res.data);
     } catch (error) {
       console.error('Error deleting cart item:', error);
       setError('Error deleting item from cart');
     }
   };
-  
-  // Function to update item quantity in cart
+
   const updateItemQuantity = async (productId, newQuantity) => {
-    if (newQuantity <= 0) return; // Prevent negative quantity
+    if (newQuantity <= 0) return;
     try {
       const res = await axios.put(`http://localhost:5000/api/cart/${userId}/update`, { productId, quantity: newQuantity });
-      setCart(res.data); // Update cart state with new data
+      setCart(res.data);
     } catch (error) {
       console.error('Error updating item quantity:', error);
       setError('Error updating item quantity');
     }
   };
-  
-  // Function to apply voucher code
-  const applyVoucher = () => {
-    // Mock voucher validation
-    if (voucherCode === 'DISCOUNT10') {
-      setDiscount(cart.totalPrice * 0.1); // Apply 10% discount
-    } else if (voucherCode === 'FREESHIP') {
-      setDiscount(shippingFee); // Apply free shipping
+
+  // const applyVoucher = () => {
+  //   if (voucherCode === 'DISCOUNT10') {
+  //     setDiscount(cart.totalPrice * 0.1);
+  //   } else if (voucherCode === 'FREESHIP') {
+  //     setDiscount(shippingFee);
+  //   } else {
+  //     setDiscount(0);
+  //     alert('Voucher không hợp lệ!');
+  //   }
+  // };
+
+  const totalAfterDiscount = cart.totalPrice - discount + shippingFee;
+
+  const handleCheckout = () => {
+    if (!isAuthenticated) {
+      alert('Bạn chưa đăng nhập, vui lòng đăng nhập');
+      navigate('/login', { state: { from: '/checkout' } }); // Truyền đường dẫn đến trang thanh toán
     } else {
-      setDiscount(0); // Reset discount if voucher is invalid
-      alert('Voucher không hợp lệ!');
+      // Nếu người dùng đã đăng nhập, điều hướng đến trang thanh toán
+      navigate('/checkout', { state: { cart } });
     }
   };
-  
-  // Calculate total after discount and shipping
-  const totalAfterDiscount = cart.totalPrice - discount + shippingFee;
-  
+
   return (
     <div id="main-wrapper">
-<Header/>
-<div className="container-fluid">
-    <div className="container">
-      <nav aria-label="breadcrumb">
-        <ol className="breadcrumb">
-          <li className="breadcrumb-item"><a href="/">Trang chủ</a></li>
-          <li className="breadcrumb-item active" aria-current="shop">Sản phẩm</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
+      <Header />
+      <div className="container-fluid">
+        <div className="container">
+          <nav aria-label="breadcrumb">
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item"><a href="/">Trang chủ</a></li>
+              <li className="breadcrumb-item active" aria-current="shop">Sản phẩm</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
       <div className="container mt120 mb-50">
         {loading ? (
           <div>Loading cart...</div>
@@ -89,69 +98,66 @@ const Cart = () => {
           <div className="row">
             <div className="col-xl-8">
               <div className="card shadow-none">
-              <div className="card-body cart mb-2 cart-title">
-  <div className="row">
-    <div className="col-7 d-flex justify-content-center">
-      <strong>Sản phẩm</strong>
-    </div>
-    <div className="col-2 d-flex justify-content-center">
-      <strong>Số lượng</strong>
-    </div>
-    <div className="col-3 d-flex justify-content-center">
-      <strong>Chức năng</strong>
-    </div>
-  </div>
-</div>
-
-{cart.items.map((item) => (
-  <li key={item._id}>
-    <div className="card-body cart mb-2">
-      <div className="row align-items-center">
-        <div className="col-7 d-flex align-items-center">
-          <img 
-            src={item.product.image} 
-            alt={item.product.description} 
-            width={80} 
-            height={80} 
-            className="me-3"
-          />
-          <p className="mb-0">{item.product.title}</p>
-        </div>
-        <div className="col-2 d-flex justify-content-center align-items-center">
-          <button 
-            className="btn btn-sm btn-outline-secondary" 
-            onClick={() => updateItemQuantity(item.product._id, item.quantity - 1)}
-          >
-            -
-          </button>
-          <input 
-            type="number" 
-            className="form-control mx-2 text-center" 
-            value={item.quantity} 
-            readOnly 
-            style={{ width: "50px" }}
-          />
-          <button 
-            className="btn btn-sm btn-outline-secondary" 
-            onClick={() => updateItemQuantity(item.product._id, item.quantity + 1)}
-          >
-            +
-          </button>
-        </div>
-        <div className="col-3 d-flex justify-content-center">
-          <button 
-            className="btn btn-sm btn-danger" 
-            onClick={() => deleteItemCart(item.product._id)}
-          >
-            <i className="fa-solid fa-trash" />
-          </button>
-        </div>
-      </div>
-    </div>
-  </li>
-))}
-
-               
+                <div className="card-body cart mb-2 cart-title">
+                  <div className="row">
+                    <div className="col-7 d-flex justify-content-center">
+                      <strong>Sản phẩm</strong>
+                    </div>
+                    <div className="col-2 d-flex justify-content-center">
+                      <strong>Số lượng</strong>
+                    </div>
+                    <div className="col-3 d-flex justify-content-center">
+                      <strong>Chức năng</strong>
+                    </div>
+                  </div>
+                </div>
+                {cart.items.map((item) => (
+                  <div key={item._id}>
+                    <div className="card-body cart mb-2">
+                      <div className="row align-items-center">
+                        <div className="col-7 d-flex align-items-center">
+                          <img 
+                            src={item.product.image} 
+                            alt={item.product.description} 
+                            width={80} 
+                            height={80} 
+                            className="me-3"
+                          />
+                          <p className="mb-0">{item.product.title}</p>
+                        </div>
+                        <div className="col-2 d-flex justify-content-center align-items-center">
+                          <button 
+                            className="btn btn-sm btn-outline-secondary" 
+                            onClick={() => updateItemQuantity(item.product._id, item.quantity - 1)}
+                          >
+                            -
+                          </button>
+                          <input 
+                            type="number" 
+                            className="form-control mx-2 text-center" 
+                            value={item.quantity} 
+                            readOnly 
+                            style={{ width: "50px" }}
+                          />
+                          <button 
+                            className="btn btn-sm btn-outline-secondary" 
+                            onClick={() => updateItemQuantity(item.product._id, item.quantity + 1)}
+                          >
+                            +
+                          </button>
+                        </div>
+                        <div className="col-3 d-flex justify-content-center">
+                          <button 
+                            className="btn btn-sm btn-danger" 
+                            onClick={() => deleteItemCart(item.product._id)}
+                          >
+                            <i className="fa-solid fa-trash" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -161,11 +167,11 @@ const Cart = () => {
                   <h5>Tóm tắt đơn hàng</h5>
                   <p>Tổng tiền hàng: {cart.totalPrice} VND</p>
                   <p>Phí vận chuyển: {shippingFee} VND</p>
-                  <p>Giảm giá: {discount} VND</p>
+                  {/* <p>Giảm giá: {discount} VND</p> */}
                   <hr />
                   <h5>Tổng cộng: {totalAfterDiscount} VND</h5>
 
-                  <div className="mt-3">
+                  {/* <div className="mt-3">
                     <h6>Nhập mã giảm giá</h6>
                     <input 
                       type="text" 
@@ -175,9 +181,9 @@ const Cart = () => {
                       onChange={(e) => setVoucherCode(e.target.value)} 
                     />
                     <button className="btn btn-primary w-100" onClick={applyVoucher}>Áp dụng mã</button>
-                  </div>
+                  </div> */}
 
-                  <button className="btn btn-success w-100 mt-3">Thanh toán</button>
+                  <button className="btn btn-success w-100 mt-3" onClick={handleCheckout}>Thanh toán</button>
                 </div>
               </div>
             </div>
