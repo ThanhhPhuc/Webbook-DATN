@@ -425,6 +425,7 @@ img.mt-img {
 
 .single-product .product-content h3 {
     color: var(--mainColor3);
+    padding-top: 15px;
 }
 
 .single-product .product-content h3 a {

@@ -53,17 +53,6 @@ const Cart = () => {
     }
   };
 
-  // const applyVoucher = () => {
-  //   if (voucherCode === 'DISCOUNT10') {
-  //     setDiscount(cart.totalPrice * 0.1);
-  //   } else if (voucherCode === 'FREESHIP') {
-  //     setDiscount(shippingFee);
-  //   } else {
-  //     setDiscount(0);
-  //     alert('Voucher không hợp lệ!');
-  //   }
-  // };
-
   const totalAfterDiscount = cart.totalPrice - discount + shippingFee;
 
   const handleCheckout = () => {

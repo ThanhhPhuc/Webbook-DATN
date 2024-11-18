@@ -8,7 +8,7 @@ const khachhangSchema = new Schema({
   password: { type: String, required: true },
   diachi: { type: String },
   dienthoai: { type: Number },
-  permissions: { type: [String], default: [] }, // Lưu trữ quyền như 'admin'
+  permissions: { type: [String], default: [] }, 
 });
 
 // Mã hóa mật khẩu trước khi lưu

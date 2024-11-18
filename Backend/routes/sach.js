@@ -32,43 +32,13 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Lấy tất cả sách với phân trang
-// router.get('/', async (req, res) => {
-//   const page = parseInt(req.query.page) || 1; // Trang mặc định là 1 nếu không có tham số
-//   const limit = parseInt(req.query.limit) || 9; // Số lượng sách mỗi trang
-//   const skip = (page - 1) * limit;
-
-//   try {
-//     const books = await Sach.find()
-//       .skip(skip) // Bỏ qua sách đã hiển thị
-//       .limit(limit) // Giới hạn số sách hiển thị
-//       .populate('author', 'name') // Lấy thông tin tác giả
-//       .populate('publisher', 'name') // Lấy thông tin nhà xuất bản
-//       .populate('category', 'name') // Lấy thông tin thể loại
-//       .select('_id title price image inventory author publisher category');
-
-//     const totalBooks = await Sach.countDocuments(); // Tổng số sách
-//     const totalPages = Math.ceil(totalBooks / limit); // Số trang
-
-//     res.status(200).json({
-//       books,
-//       totalPages,
-//       currentPage: page,
-//     });
-//   } catch (error) {
-//     console.error('Error fetching books:', error.message);
-//     res.status(500).json({ error: 'Error fetching books', message: error.message });
-//   }
-// });
-
-
+// Lấy tất cả sách
 router.get('/', async (req, res) => {
   try {
     const books = await Sach.find()
-      .populate('author', 'name')  // Lấy thông tin tác giả
-      .populate('publisher', 'name')  // Lấy thông tin nhà xuất bản
-      .populate('category', 'name');  // Lấy thông tin thể loại
-
+      .populate('author', 'name')
+      .populate('publisher', 'name')
+      .populate('category', 'name');
     res.status(200).json(books);
   } catch (error) {
     console.error('Error fetching books:', error.message);
@@ -152,26 +122,91 @@ router.get('/search', async (req, res) => {
 // Lấy sách theo thể loại
 router.get('/theloai/:categoryId', async (req, res) => {
   try {
-    const { categoryId } = req.params; // Lấy categoryId từ params
+    const { categoryId } = req.params;
 
-    // Tìm tất cả sách thuộc thể loại tương ứng
+    // Tìm sách theo categoryId
     const books = await Sach.find({ category: categoryId })
-      .populate('author', 'name')  // Lấy thông tin tác giả
-      .populate('publisher', 'name')  // Lấy thông tin nhà xuất bản
-      .populate('category', 'name');  // Lấy thông tin thể loại
+      .populate('author', 'name')
+      .populate('publisher', 'name')
+      .populate('category', 'name'); // Thêm populate để lấy tên thể loại
 
-    // Kiểm tra nếu không có sách nào trong thể loại
+    // Kiểm tra nếu không có sách nào
     if (books.length === 0) {
       return res.status(404).json({ message: 'Không tìm thấy sách trong thể loại này.' });
     }
 
-    // Trả về kết quả
-    res.status(200).json({
-      books: books, // Danh sách sách
-    });
+    // Lấy tên thể loại từ cơ sở dữ liệu nếu cần
+    const category = await Theloai.findById(categoryId); // Giả sử bạn có mô hình Theloai
+    const categoryName = category ? category.name : 'Không xác định'; // Lấy tên hoặc đặt mặc định
+
+    res.json({ books, categoryName });
   } catch (error) {
     console.error('Có lỗi xảy ra khi lấy sách theo thể loại:', error);
-    res.status(500).json({ message: 'Có lỗi xảy ra khi lấy sách theo thể loại.', error: error.message });
+    res.status(500).json({ message: 'Có lỗi xảy ra khi lấy sách theo thể loại.' });
+  }
+});
+
+// Endpoint tạo đơn hàng
+router.post('/create', async (req, res) => {
+  const { userId, orderDetails, paymentMethod, totalPrice, shippingInfo } = req.body;
+
+  try {
+    // Kiểm tra và cập nhật số lượng tồn kho
+    for (const item of orderDetails) {
+      const sach = await Sach.findById(item.productId);
+      if (!sach) {
+        return res.status(404).json({ message: `Sản phẩm với ID ${item.productId} không tồn tại.` });
+      }
+
+      // Kiểm tra tồn kho có đủ không
+      if (sach.inventory < item.quantity) {
+        return res.status(400).json({ message: `Sản phẩm "${sach.title}" không còn đủ số lượng trong kho.` });
+      }
+
+      // Trừ số lượng tồn kho
+      sach.inventory -= item.quantity;
+      await sach.save(); // Lưu lại thay đổi
+    }
+
+    // Tiếp tục xử lý tạo đơn hàng
+    const newOrder = new Order({
+      userId,
+      orderDetails,
+      paymentMethod,
+      totalPrice,
+      shippingInfo,
+    });
+
+    await newOrder.save();
+
+    res.status(201).json({ message: 'Đơn hàng đã được tạo thành công!', order: newOrder });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Có lỗi xảy ra khi tạo đơn hàng.' });
+  }
+});
+
+// Endpoint cập nhật tồn kho
+router.put('/:id/update-inventory', async (req, res) => {
+  try {
+    const sachId = req.params.id;
+    const quantity = req.body.quantity;
+
+    const sach = await Sach.findById(sachId);
+    if (!sach) {
+      return res.status(404).json({ message: 'Sản phẩm không tồn tại' });
+    }
+
+    // Trừ tồn kho
+    if (sach.inventory >= quantity) {
+      sach.inventory -= quantity;
+      await sach.save();
+      res.status(200).json({ message: 'Cập nhật tồn kho thành công' });
+    } else {
+      res.status(400).json({ message: 'Không đủ tồn kho' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Lỗi server', error });
   }
 });
 

@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom'; // Thêm import này
 const OrderDetail = () => {
   const { orderId } = useParams(); // Lấy orderId từ URL
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+const navigate = useNavigate();
 
   useEffect(() => {
     // Lấy chi tiết đơn hàng từ API khi trang được tải
