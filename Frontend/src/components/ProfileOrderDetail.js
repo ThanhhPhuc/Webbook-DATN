@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { AuthContext } from '../context/AuthContext';
 import Header from './Header';
 
 const ProfileOrderDetail = () => {
   const { orderId } = useParams(); // Get orderId from URL
   const navigate = useNavigate(); // Hook for navigation
-  const { user } = useContext(AuthContext); // Get user from AuthContext
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +46,7 @@ const ProfileOrderDetail = () => {
             <Link to="/profile" className="nav-link"><i className="fa fa-user" /> Tài khoản Chi tiết</Link>
             <Link to="/profile/change-password" className="nav-link"><i className="fa fa-lock" /> Thay đổi mật khẩu</Link>
             <Link to="/profile/orders" className="nav-link"><i className="fa fa-cart-arrow-down" /> Đặt hàng</Link>
-            <Link to="/" onClick={() => setUser (null)} className="nav-link"><i className="fa fa-sign-out" /> Đăng xuất</Link>
+            <Link to="/" className="nav-link"><i className="fa fa-sign-out" /> Đăng xuất</Link>
             <a href="#"  className="nav-link"><i className="fa fa-trash" /> Xóa tài khoản</a>
           </div>
         </div>
