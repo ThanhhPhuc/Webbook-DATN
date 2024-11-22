@@ -48,7 +48,7 @@ const Header = () => {
                             <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                                 <li className="dropdown-item text-center"><b>{user.username}</b></li>
                                 <li><Link className="dropdown-item" to="/profile">{t('header.profile')}</Link></li>
-                                <li><Link className="dropdown-item" to="/donhan">{t('header.orders')}</Link></li>
+                                <li><Link className="dropdown-item" to="#orders">{t('header.orders')}</Link></li>
                                 <li><Link className="dropdown-item" to="/dsyeuthich">{t('header.wishlist')}</Link></li>
                                 <li><button className="dropdown-item" onClick={logout}>{t('header.logout')}</button></li>
                             </ul>

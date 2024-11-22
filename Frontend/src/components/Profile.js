@@ -135,7 +135,7 @@ const Profile = () => {
                                         <a href="#account-info" data-toggle="tab"><i className="fa fa-user" /> Tài khoản Chi tiết</a>
                                         <a href="#change-password" data-toggle="tab"><i className="fa fa-lock" /> Thay đổi mật khẩu</a>
                                         <a href="#orders" data-toggle="tab"><i className="fa fa-cart-arrow-down" /> Đặt hàng</a>
-                                        <a href="/" onClick={() => setUser  (null)}> <i className="fa fa-sign-out" /> Đăng xuất</a>
+                                        <a href="/"  onClick={() => setUser  (null)}><i className="bi bi-box-arrow-right" /> Đăng xuất</a>
                                         <a href="#" onClick={handleDeleteAccount}><i className="fa fa-trash" /> Xóa tài khoản</a> 
                                     </div>
                                 </div>

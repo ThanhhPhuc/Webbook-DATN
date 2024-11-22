@@ -4,12 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-// import { UserContext } from '../context/UserContext'; 
+import DOMPurify from 'dompurify';
 import Header from './Header';
 function Home() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [cart, setCart]   = useState();
+  const [posts, setPosts] = useState([]);
   // const userId  = localStorage.getItem('userId'); cần sửa lại jwt để lấy token=>role
     const userId =  "670d2d7f4f9223989b3f51ed";
   const [categories, setCategories] = useState([]);
@@ -32,7 +33,16 @@ function Home() {
         console.error('Error fetching categories:', error);
       }
     };
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/baiviet'); 
+        setPosts(response.data.slice(0, 3));
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
 
+    fetchPosts();
     fetchBooks();
     fetchCategories();
   }, []); // Chỉ chạy một lần sau khi component mount
@@ -314,39 +324,40 @@ function Home() {
 </div>
 </div>
 </div>
-      <div className="guaranteed container">
-        <div className="grid wide">
-          <div className="row">
-            <div className="col-lg-4 col-sm-12">
-              <div className="guaranteed-item">
-                <div className="guaranteed-icon">
-                  <i className="fa-solid fa-truck-fast" />
-                </div>
-                <h1>GIAO HÀNG TOÀN QUỐC</h1>
-                <p>Gửi hàng đi trong ngày</p>
-              </div>
-            </div>
-            <div className="col-lg-4 col-sm-12">
-              <div className="guaranteed-item">
-                <div className="guaranteed-icon">
-                  <i className="fa-solid fa-rotate-right" />
-                </div>
-                <h1>HOÀN TIỀN NHANH TRONG NGÀY</h1>
-                <p>Không để khách hàng đợi lâu</p>
-              </div>
-            </div>
-            <div className="col-lg-4 col-sm-12">
-              <div className="guaranteed-item">
-                <div className="guaranteed-icon">
-                  <i className="fa-solid fa-thumbs-up" />
-                </div>
-                <h1>SẢN PHẨM UY TÍN, AN TOÀN</h1>
-                <p>Đảm bảo nhu cầu dịch vụ của khách hàng</p>
-              </div>
-            </div>
+<div className="guaranteed container">
+  <div className="grid wide">
+    <div className="row">
+      <div className="col-lg-4 col-sm-12">
+        <div className="guaranteed-item">
+          <div className="guaranteed-icon">
+            <i className="bi bi-truck me-2"></i>
           </div>
+          <h1>GIAO HÀNG TOÀN QUỐC</h1>
+          <p>Gửi hàng đi trong ngày</p>
         </div>
       </div>
+      <div className="col-lg-4 col-sm-12">
+        <div className="guaranteed-item">
+          <div className="guaranteed-icon">
+            <i className="bi bi-arrow-repeat me-2"></i>
+          </div>
+          <h1>HOÀN TIỀN NHANH TRONG NGÀY</h1>
+          <p>Không để khách hàng đợi lâu</p>
+        </div>
+      </div>
+      <div className="col-lg-4 col-sm-12">
+        <div className="guaranteed-item">
+          <div className="guaranteed-icon">
+            <i className="bi bi-pie-chart-fill me-2"></i>
+          </div>
+          <h1>SẢN PHẨM UY TÍN, AN TOÀN</h1>
+          <p>Đảm bảo nhu cầu dịch vụ của khách hàng</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
       <div className="container-fluid product-h1">
         <div className="container product-h1_sm">
           <div className="product-representative">
@@ -378,7 +389,8 @@ function Home() {
                       <p>
                       <a style={{'color': 'black'}} href='/shop'> Xem ngay</a>
                       </p>
-                      <i className="fa-solid fa-arrow-right" />
+                      <i className="bi bi-arrow-right"></i>
+
                     </button>
                   </div>
                 </div>
@@ -386,20 +398,53 @@ function Home() {
             </div>
           </div>
         </div>
-  
       </div>
-      <div className="container-fluid">
-        <div className="banner2">
-          <div className="container h-100">
-            <div className="banner2-content">
-              <p>THE BOOK OF <br /> MY LIFE</p>
-              <div className>
-                <button className="btn-main" href>TÌM HIỂU THÊM</button>
-              </div>
-            </div>
-          </div>
+      <br/>
+      <section className="section blog" id="blog" aria-label="blog">
+        <div className="container">
+          <h2 className="h2 section-title">
+            Tin tức mới nhất &amp; <span className="span">bài viết</span>
+          </h2>
+          <p className="section-text">
+            Tin tức cập nhật về ngày phát hành, sách mới, thông tin về tổ chức hội sách,... sẽ được cập nhật định kỳ
+          </p>
+          <ul className="blog-list">
+            {posts.map((post) => (
+              <li key={post._id}>
+                <div className="blog-card">
+                  <figure className="card-banner img-holder" style={{ width: 400, height: 290 }}>
+                    <img src={post.image} width={400} height={290} loading="lazy" alt={post.title} className="img-cover" />
+                  </figure>
+                  <div className="card-content">
+                    <ul className="card-meta-list">
+                      <li className="card-meta-item">
+                        < ion-icon name="person-outline" />
+                        <a href="#" className="item-text">Admin</a>
+                      </li>
+                      <li className="card-meta-item">
+                        <ion-icon name="calendar-outline" />
+                        <time dateTime={new Date(post.date).toISOString()} className="item-text">{new Date(post.date).toLocaleDateString()}</time>
+                      </li>
+                    </ul>
+                    <h3>
+                      <Link to={`/baiviet/${post._id}`} className="card-title">{post.title.substring(0, 30)}</Link>
+                    </h3>
+                    <p className="card-text">
+                    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content.substring(0, 100))}} />
+                      {/* {post.content.substring(0, 100)}... */}
+                    </p>
+                    <Link to={`/baiviet/${post._id}`} className="card-link">
+                      <span className="span">Xem thêm</span>
+                      <ion-icon name="caret-forward" />
+                    </Link>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-      </div>
+      </section>
+
       <div className="container brand">
         <div className="container">
           <div className="row">

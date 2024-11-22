@@ -1,120 +1,73 @@
-  import React, { useState, useContext } from 'react';
-  import { AuthContext } from '../context/AuthContext';
-  import { Link, useNavigate } from 'react-router-dom';
-  import Header from './Header';
-  const Login = () => {
-      const navigate = useNavigate();
-      const [email, setEmail] = useState('');
-      const [password, setPassword] = useState('');
-      const { login } = useContext(AuthContext); // Lấy hàm login từ AuthContext
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useParams, Link } from 'react-router-dom';
+import '../styles/PostDetail.css';
+import Header from './Header';
+import DOMPurify from 'dompurify';
+function PostDetail() {
+  const { id } = useParams();
+  const [post, setPost] = useState(null);
+  const [relatedPosts, setRelatedPosts] = useState([]); // Danh sách bài viết liên quan
+  const [loading, setLoading] = useState(true);
 
-      const handleLogin = async (e) => {
-          e.preventDefault();
-          
-          // Gọi hàm login từ AuthContext
-          await login(email, password); // Chuyển email và mật khẩu vào hàm login
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/baiviet/${id}`);
+        setPost(response.data);
+      } catch (error) {
+        console.error('Error fetching post:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-          // Sau khi đăng nhập thành công, bạn có thể điều hướng người dùng nếu cần
-          // (Tùy thuộc vào logic trong AuthContext)
-      };
+    const fetchRelatedPosts = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/baiviet'); // Lấy tất cả bài viết
+        setRelatedPosts(response.data.filter(p => p._id !== id)); // Lọc bài viết hiện tại ra
+      } catch (error) {
+        console.error('Error fetching related posts:', error);
+      }
+    };
 
-      const handleRegisterClick = () => {
-          navigate('/register'); // Điều hướng đến trang đăng ký
-      };
+    fetchPost();
+    fetchRelatedPosts();
+  }, [id]);
 
-      return (
-<div id="main-wrapper">
-<Header/>
-  <div className="container-login">
-    {/*-------------------------------- Form login-------------------------- */}
-    <div className="form-login container-sm">
-  <div className="fl-left">
-    <h1 className="name-lg">Đăng nhập</h1>
-    <form onSubmit={handleLogin}>
-      <div className="lg-user_name">
-        <div className="lg-user_name__input">
-          <div className="input-group">
-            <input
-              required
-              type="text"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              autoComplete="off"
-              className="input input-login-register input-user_name"
-            />
-            <label className="user-label">Email</label>
-            {/* Bootstrap Icon thay thế */}
-            <i className="bi bi-person-circle" />
-          </div>
+  if (loading) return <div>Loading...</div>;
+
+  if (!post) return <div>Bài viết không tồn tại.</div>;
+
+  return (
+    <div>
+        <Header/>
+   
+    <div className="container">
+      <div className="post-detail">
+        <div className="main-content">
+          <h1>{post.title}</h1>
+          <img src={post.image} alt={post.title} style={{ width: '100%', height: 'auto' }} />
+          <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
+          <p><strong>Tác giả:</strong> {post.author}</p>
+          <p><strong>Ngày đăng:</strong> {new Date(post.date).toLocaleDateString()}</p>
+          <Link to="/" className="btn quaylai">Quay lại</Link>
+        </div>
+
+        <div className="related-posts">
+          <h2>Bài viết liên quan</h2>
+          <ul>
+            {relatedPosts.map(relatedPost => (
+              <li key={relatedPost._id}>
+                <Link to={`/baiviet/${relatedPost._id}`}>{relatedPost.title}</Link>
+                <img src={relatedPost.image} style={{ width: '100%', height: 'auto' }} />
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
-      <div className="lg-password">
-        <div className="lg-password__input">
-          <div className="input-group">
-            <input
-              required
-              type="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              autoComplete="off"
-              className="input input-login-register input-password"
-            />
-            <label className="user-label">Mật khẩu</label>
-            {/* Bootstrap Icon thay thế */}
-            <i className="bi bi-eye" />
-          </div>
-        </div>
-      </div>
-      <div className="fg-pass">
-        <a href="/quenmatkhau">Quên mật khẩu ?</a>
-      </div>
-      <div className="btn-login">
-        <input type="submit" defaultValue="Đăng nhập" />
-      </div>
-      <div className="d-xxl-none d-flex justify-content-center align-items-center mt-2">
-        Bạn chưa có tài khoản
-        <div
-          onClick={handleRegisterClick}
-          style={{ cursor: "pointer" }}
-          className="register-now ml-2"
-        >
-          Đăng ký ngay !
-        </div>
-      </div>
-    </form>
-  </div>
-  <div className="fl-right">
-    <h1>Bạn chưa có tài khoản ?</h1>
-    <div
-      onClick={handleRegisterClick}
-      style={{ cursor: "pointer" }}
-      className="register-now"
-    >
-      Đăng ký ngay !
     </div>
-  </div>
-</div>
-
-    {/* -----------------------------End Form login------------------------- */}
-
-  </div>
-  <div className="fixed-icons">
-  <a href="tel:+84123456789" className="icon-phone">
-    <img src="../assets/images/phone.png" alt="Phone" />
-  </a>
-  <a href="#" className="icon-zalo">
-    <img src="../assets/images/messenger.png" alt="messenger" />
-  </a>
-  <a href="#" className="icon-facebook">
-    <img src="../assets/images/facebook.png" alt="Facebook" />
-  </a>
-  <a href="#" className="icon-tiktok">
-    <img src="../assets/images/tiktok.png" alt="TikTok" />
-  </a>
-</div>
-<footer className="footer-section" style={{ backgroundColor: "#f8f9fa", padding: "40px 0" }}>
+    <footer className="footer-section" style={{ backgroundColor: "#f8f9fa", padding: "40px 0" }}>
   <div className="row mb-4">
   <div className="col-md-12 text-center" style={{ backgroundColor: '#f0f0f0', padding: '20px', borderRadius: '5px' }}>
     <form className="d-flex justify-content-center align-items-center">
@@ -178,8 +131,8 @@
         <div className="row align-items-center">
             <div className="col-md-6 mb-3">
                 <div className="d-flex justify-content-start">
-                    <a href="#" className="me-3"><img src="assets/images/appstore.jpg" style={{ height:'50px', width: '150px' }} alt="App Store" /></a>
-                    <a href="#"><img src="assets/images/ggplay.png" style={{ height:'50px', width: '150px' }} alt="Google Play" /></a>
+                    <a href="#" className="me-3"><img src="/assets/images/appstore.jpg" style={{ height:'50px', width: '150px' }} alt="App Store" /></a>
+                    <a href="#"><img src="/assets/images/ggplay.png" style={{ height:'50px', width: '150px' }} alt="Google Play" /></a>
                 </div>
             </div>
         </div>
@@ -199,9 +152,8 @@
 </div>
     </div>
 </footer>
-</div>
+    </div>
+  );
+}
 
-    );
-};
-
-export default Login;
+export default PostDetail;

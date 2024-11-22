@@ -363,7 +363,7 @@ img.brand-img {
 }
 
 .brand {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 .banner2 {
@@ -1218,3 +1218,11 @@ label.nhap-code_title {
     border-color: #05ff00;
     font-weight: 500;
 }
+
+/* adminbaiviet */
+
+.quill-editor {
+    height: 300px; /* Thay đổi chiều cao theo ý muốn */
+  }
+
+  

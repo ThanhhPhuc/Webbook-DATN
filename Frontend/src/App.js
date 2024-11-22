@@ -24,6 +24,8 @@ import PaymentSuccess from './components/PaymentSuccess';
 import OrderTable from './components/OrderTable';
 import OrderDetail from './components/OrderDetail';
 import ProfileOrderDetail from './components/ProfileOrderDetail';
+import AdminBaiViet from './components/AdminBaiViet';
+import PostDetail from './components/PostDetail';
 function App() {
   return (
     <Router>
@@ -51,6 +53,8 @@ function App() {
             <Route path="/adminorder" element={<OrderTable />} />
             <Route path="/order/:orderId" element={<OrderDetail />} /> {/* Cấu hình đúng route cho OrderDetail */}
             <Route path="/profile/order/:orderId" element={<ProfileOrderDetail />} />
+            <Route path="/adminbaiviet" element={<AdminBaiViet />} />
+            <Route path="/baiviet/:id" element={<PostDetail />} />
           </Routes>
         </CartProvider>
       </AuthProvider>

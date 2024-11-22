@@ -1,53 +1,55 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
-function Admintacgia() {
-  const [authors, setAuthors] = useState([]);
-  const [newAuthor, setNewAuthor] = useState({ name: '', bio: '', hinh: '' });
-  const [editAuthor, setEditAuthor] = useState(null);
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import CSS cho React Quill
+import DOMPurify from 'dompurify';
+function AdminBaiViet() {
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState({ title: '', content: '', image: '', author: '' });
+  const [editPost, setEditPost] = useState(null);
   const navigate = useNavigate();
 
-  const fetchAuthors = async () => {
+  const fetchPosts = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/tacgia');
-      setAuthors(response.data);
+      const response = await axios.get('http://localhost:5000/api/baiviet');
+      setPosts(response.data);
     } catch (error) {
-      console.error('Error fetching authors:', error);
+      console.error('Error fetching posts:', error);
     }
   };
 
   useEffect(() => {
-    fetchAuthors();
+    fetchPosts();
   }, []);
 
-  const handleDelete = async (authorId) => {
+  const handleDelete = async (postId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/tacgia/${authorId}`);
-      setAuthors(authors.filter(author => author._id !== authorId));
+      await axios.delete(`http://localhost:5000/api/baiviet/${postId}`);
+      setPosts(posts.filter(post => post._id !== postId));
     } catch (error) {
-      console.error('Error deleting author:', error);
+      console.error('Error deleting post:', error);
     }
   };
 
   const handleAdd = async () => {
+    console.log('New Post Data:', newPost); // Kiểm tra dữ liệu mới
     try {
-      const response = await axios.post('http://localhost:5000/api/tacgia', newAuthor);
-      console.log('Tác giả mới được thêm:', response.data);
-      setAuthors([...authors, response.data]);
-      setNewAuthor({ name: '', bio: '', hinh: '' });
+      const response = await axios.post('http://localhost:5000/api/baiviet', newPost);
+      setPosts([...posts, response.data]);
+      setNewPost({ title: '', content: '', image: '', author: '' });
     } catch (error) {
-      console.error('Error adding author:', error.response ? error.response.data : error.message);
+      console.error('Error adding post:', error.response ? error.response.data : error.message);
     }
   };
-
+  
   const handleEdit = async () => {
     try {
-      const response = await axios.put(`http://localhost:5000/api/tacgia/${editAuthor._id}`, editAuthor);
-      setAuthors(authors.map(author => author._id === editAuthor._id ? response.data : author));
-      setEditAuthor(null);
+      const response = await axios.put(`http://localhost:5000/api/baiviet/${editPost._id}`, editPost);
+      setPosts(posts.map(post => post._id === editPost._id ? response.data : post));
+      setEditPost(null);
     } catch (error) {
-      console.error('Error updating author:', error);
+      console.error('Error updating post:', error);
     }
   };
 
@@ -61,7 +63,7 @@ function Admintacgia() {
       <div className="row">
         <div className="col-md-2 bg-light p-3">
           <div className="libworld-logo text-center mb-3">
-          <h1><span>Libworld</span></h1>
+            <h1><span>Libworld</span></h1>
           </div>
           <hr />
           <nav>
@@ -86,9 +88,9 @@ function Admintacgia() {
               </li>
               <li className="nav-item mb-2">
                 <a href="/adminorder" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
-              </li>
+ </li>
               <li className="nav-item mb-2">
-                <a href="#" className="nav-link text-dark "><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a>
+                <a href="#" className="nav-link text-dark"><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a>
               </li>
               <li className="nav-item mb-2">
                 <a href="/adminbaiviet" className="nav-link text-dark"><i className="bi bi-journal-text me-2"></i>Quản lý bài viết</a>
@@ -103,28 +105,28 @@ function Admintacgia() {
 
         <div className="col-md-10">
           <div className="admin-header bg-primary text-white p-3 mb-3">
-            <p>Chào mừng đến trang quản trị tác giả của Nhà sách Libworld</p>
+            <p>Chào mừng đến trang quản trị bài viết của Nhà sách Libworld</p>
           </div>
 
           <div className="admin-content p-3">
-            <h4>Thêm tác giả mới</h4>
+            <h4>Thêm bài viết mới</h4>
             <div className="row mb-3">
               <div className="col-md-6">
                 <input
                   type="text"
                   className="form-control mb-2"
-                  placeholder="Tên Tác Giả"
-                  value={newAuthor.name}
-                  onChange={(e) => setNewAuthor({ ...newAuthor, name: e.target.value })}
+                  placeholder="Tiêu đề"
+                  value={newPost.title}
+                  onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
                 />
               </div>
               <div className="col-md-6">
                 <input
                   type="text"
                   className="form-control mb-2"
-                  placeholder="Tiểu sử"
-                  value={newAuthor.bio}
-                  onChange={(e) => setNewAuthor({ ...newAuthor, bio: e.target.value })}
+                  placeholder="Tác giả"
+                  value={newPost.author}
+                  onChange={(e) => setNewPost({ ...newPost, author: e.target.value })}
                 />
               </div>
               <div className="col-md-6">
@@ -132,72 +134,91 @@ function Admintacgia() {
                   type="text"
                   className="form-control mb-2"
                   placeholder="URL hình ảnh"
-                  value={newAuthor.hinh}
-                  onChange={(e) => setNewAuthor({ ...newAuthor, hinh: e.target.value })}
+                  value={newPost.image}
+                  onChange={(e) => setNewPost({ ...newPost, image: e.target.value })}
                 />
               </div>
               <div className="col-md-12">
-                <button className="btn btn-success" onClick={handleAdd}>Thêm tác giả</button>
+                <ReactQuill
+                  className="quill-editor" 
+                  value={newPost.content}
+                  onChange={(content) => setNewPost({ ...newPost, content })}
+                  placeholder="Nội dung"
+                />
+              </div>
+              <div className="col-md-12">
+                <button className="btn btn-success" onClick={handleAdd}>Thêm bài viết</button>
               </div>
             </div>
 
             <table className="table table-bordered">
               <thead className="thead-dark">
                 <tr>
-                  <th>Tên Tác Giả</th>
-                  <th>Tiểu sử</th>
+                  <th>Tiêu đề</th>
+                  <th>Nội dung</th>
+                  <th>Tác giả</th>
                   <th>Hình</th>
                   <th colSpan="2">Chức năng</th>
                 </tr>
               </thead>
               <tbody>
-                {authors.map(author => (
-                  <tr key={author._id}>
+                {posts.map(post => (
+                  <tr key={post._id}>
                     <td>
-                      {editAuthor && editAuthor._id === author._id ? (
+                      {editPost && editPost._id === post._id ? (
                         <input
                           type="text"
-                          value={editAuthor.name}
+                          value={editPost.title ?? ''}
                           className="form-control"
-                          onChange={(e) => setEditAuthor({ ...editAuthor, name: e.target.value })}
+                          onChange={(e) => setEditPost({ ...editPost, title: e.target.value })}
                         />
                       ) : (
-                        author.name
+                        post.title
                       )}
                     </td>
                     <td>
-                      {editAuthor && editAuthor._id === author._id ? (
+  {editPost && editPost._id === post._id ? (
+    <ReactQuill
+      value={editPost.content ?? ''}
+      onChange={(content) => setEditPost({ ...editPost, content })}
+    />
+  ) : (
+    <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.content) }} />
+  )}
+</td>
+                    <td>
+                      {editPost && editPost._id === post._id ? (
                         <input
                           type="text"
-                          value={editAuthor.bio}
+                          value={editPost.author ?? ''}
                           className="form-control"
-                          onChange={(e) => setEditAuthor({ ...editAuthor, bio: e.target.value })}
+                          onChange={(e) => setEditPost({ ...editPost, author: e.target.value })}
                         />
                       ) : (
-                        author.bio
+                        post.author
                       )}
                     </td>
                     <td>
-                      {editAuthor && editAuthor._id === author._id ? (
+                      {editPost && editPost._id === post._id ? (
                         <input
                           type="text"
-                          value={editAuthor.hinh}
+                          value={editPost.image ?? ''}
                           className="form-control"
-                          onChange={(e) => setEditAuthor({ ...editAuthor, hinh: e.target.value })}
+                          onChange={(e) => setEditPost({ ...editPost, image: e.target.value })}
                         />
                       ) : (
-                        <img src={author.hinh} alt={author.name} style={{ width: '50px', height: '50px' }} />
+                        <img src={post.image} alt={post.title} style={{ width: '50px', height: '50px' }} />
                       )}
                     </td>
                     <td>
-                      {editAuthor && editAuthor._id === author._id ? (
-                        <button className="btn btn-primary" onClick={handleEdit}>Lưu</button>
+                      {editPost && editPost._id === post._id ? (
+                        <button className="btn btn-primary" onClick={ handleEdit}>Lưu</button>
                       ) : (
-                        <button className="btn btn-warning" onClick={() => setEditAuthor(author)}>Sửa</button>
+                        <button className="btn btn-warning" onClick={() => setEditPost(post)}>Sửa</button>
                       )}
                     </td>
                     <td>
-                      <button className="btn btn-danger" onClick={() => handleDelete(author._id)}>Xóa</button>
+                      <button className="btn btn-danger" onClick={() => handleDelete(post._id)}>Xóa</button>
                     </td>
                   </tr>
                 ))}
@@ -210,4 +231,4 @@ function Admintacgia() {
   );
 }
 
-export default Admintacgia;
+export default AdminBaiViet;

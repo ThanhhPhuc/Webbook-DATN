@@ -1,4 +1,6 @@
 @charset "UTF-8";
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
 /*-----------------------------------------------------------------------------------
 
     Template Name: Koncrete - Construction Bootstrap 4 Template
@@ -54,6 +56,12 @@
   --text-color: #333333;
   --background-color: #f9f9f9;
   --accent-color: #e74c3c;
+  --dim-gray: hsl(0, 0%, 42%);
+  --raisin-black-1: hsl(0, 0%, 16%);
+--fw-700: 700;
+--transition: 0.25s ease;
+--marigold: hsl(206, 99%, 46%);
+--xiketic: hsl(277, 25%, 10%);
 }
 
 html,
@@ -9204,7 +9212,7 @@ only screen and (max-width: 767px) {
 
 /* Thêm khoảng cách giữa các cột */
 .footer-section .row > div {
-  margin-bottom: 30px; /* Điều chỉnh khoảng cách dưới mỗi cột */
+  /* margin-bottom: 30px;  */
 }
 
 
@@ -9230,10 +9238,6 @@ only screen and (max-width: 767px) {
 .fixed-icons img:hover {
   transform: scale(1.1);  /* Phóng to icon khi hover */
 }
-
-
-
-
 
 /* button  */
 .btn-shop {
@@ -9307,3 +9311,184 @@ only screen and (max-width: 767px) {
   justify-content: space-between;
 } */
 
+/*-----------------------------------*\
+  #BLOG
+\*-----------------------------------*/
+
+.blog { background-color: var(--white); 
+ padding-bottom: 10px;
+}
+
+.blog .section-title { color: var(--xiketic); }
+
+.blog .section-text {
+  color: var(--dim-gray);
+  margin-block: 50px 20px;
+}
+
+.blog-list li {
+  list-style: none; /* Loại bỏ ký tự danh sách mặc định */
+}
+
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Chia thành 3 cột */
+  gap: 20px; /* Khoảng cách giữa các card */
+  padding: 0 15px; /* Thêm padding để tạo khoảng trống hai bên trên màn hình nhỏ */
+  box-sizing: border-box; /* Đảm bảo padding không làm tăng tổng chiều rộng */
+
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column; /* Đảm bảo nội dung được sắp xếp theo chiều dọc */
+  justify-content: space-between; /* Giãn đều các phần nội dung */
+  height: 100%; /* Đảm bảo tất cả các card có chiều cao đồng nhất */
+  background-color: var(--white);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card-content {
+  flex-grow: 1; /* Giãn phần nội dung chiếm toàn bộ chiều cao còn lại */
+  padding-left: 10px;
+}
+
+.card-text {
+  color: var(--dim-gray);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.6;
+  margin-block-end: 25px;
+  
+  /* Giới hạn số dòng hiển thị */
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Hiển thị tối đa 2 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden; /* Ẩn phần văn bản vượt quá */
+  text-overflow: ellipsis; /* Hiển thị dấu "..." nếu vượt quá */
+}
+
+.blog-card .card-link {
+  color: var(--raisin-black-1);
+  font-size: 1.4rem;
+  font-weight: var(--fw-700);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition);
+}
+
+.blog-card .card-link ion-icon,
+.blog-card .card-link:is(:hover, :focus) { color: var(--marigold); }
+
+
+.card-banner {
+  width: 100%; /* Đảm bảo hình ảnh luôn phù hợp với cột */
+  height: auto;
+}
+
+@media (max-width: 992px) {
+  .blog-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 cột khi màn hình nhỏ hơn 992px */
+  }
+}
+
+@media (max-width: 576px) {
+  .blog-list {
+    grid-template-columns: 1fr; /* 1 cột khi màn hình nhỏ hơn 576px */
+  }
+}
+
+/* .blog-card .card-banner { margin-block-end: 30px; } */
+
+.blog-card .card-meta-list {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.blog-card .card-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--quick-silver);
+  font-size: var(--fs-11);
+  font-weight: var(--fw-600);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.blog-card .card-meta-item ion-icon {
+  --ionicon-stroke-width: 50px;
+  color: var(--marigold);
+}
+
+.blog-card .card-meta-item a.item-text { transition: var(--transition); }
+
+.blog-card .card-meta-item a.item-text:is(:hover, :focus) { color: var(--marigold); }
+
+.blog-card .card-title {
+  color: var(--raisin-black-1);
+  font-size: var(--fs-5);
+  font-family: var(--ff-oxanium);
+  font-weight: var(--fw-800);
+  text-transform: uppercase;
+  line-height: 1.2;
+  margin-block: 10px 15px;
+  transition: var(--transition);
+}
+
+.blog-card .card-title:is(:hover, :focus) { color: var(--marigold); }
+
+.blog-card .card-link {
+  color: var(--raisin-black-1);
+  font-size: var(--fs-9);
+  font-weight: var(--fw-700);
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition);
+}
+
+.blog-card .card-link ion-icon,
+.blog-card .card-link:is(:hover, :focus) { color: var(--marigold); }
+
+.section-subtitle,
+.section-title {
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  padding-top: 10px;
+}
+
+.section-subtitle {
+  color: var(--silver);
+  font-size: var(--fs-9);
+  font-weight: var(--fw-700);
+  margin-block-end: 10px;
+}
+
+.section-title::after {
+  content: url("../images/title-underline.png");
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.section-text {
+  color: var(--color, var(--light-gray-1));
+  font-size: var(--fs-8);
+  font-weight: var(--fw-500);
+  max-width: 65ch;
+  margin-inline: auto;
+  text-align: center;
+  line-height: 1.8;
+}
+.col{
+  padding-top: 10px;
+}

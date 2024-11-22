@@ -140,7 +140,8 @@ const Cart = () => {
                             className="btn btn-sm btn-danger" 
                             onClick={() => deleteItemCart(item.product._id)}
                           >
-                            <i className="fa-solid fa-trash" />
+                           <i className="bi bi-trash-fill" />
+
                           </button>
                         </div>
                       </div>

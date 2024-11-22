@@ -46,14 +46,14 @@ const ProfileOrderDetail = () => {
             <Link to="/profile" className="nav-link"><i className="fa fa-user" /> Tài khoản Chi tiết</Link>
             <Link to="/profile/change-password" className="nav-link"><i className="fa fa-lock" /> Thay đổi mật khẩu</Link>
             <Link to="/profile/orders" className="nav-link"><i className="fa fa-cart-arrow-down" /> Đặt hàng</Link>
-            <Link to="/" className="nav-link"><i className="fa fa-sign-out" /> Đăng xuất</Link>
+            <Link to="/" className="nav-link  ">  <i className="bi bi-box-arrow-right" /> Đăng xuất</Link>
             <a href="#"  className="nav-link"><i className="fa fa-trash" /> Xóa tài khoản</a>
           </div>
         </div>
 
         <div className="col-md-10">
 
-        <div className="profile-content p-3">
+        <div className="profile-content p-3"> 
         <h4>Chi tiết đơn hàng {order._id}</h4>
         <div className="row mb-3">
           <div className="col-md-6">

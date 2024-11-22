@@ -11,8 +11,8 @@ const nxbRoutes = require('./routes/nxb');
 const hoadonRoutes = require('./routes/hoadon');
 const authRoutes = require('./routes/auth');
 const cartRoutes = require('./routes/cart');
-const orderRoutes = require('./routes/order');  // Đảm bảo import đúng file order
-
+const orderRoutes = require('./routes/order');  
+const baivietRoutes = require('./routes/baiviet');
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -33,7 +33,8 @@ app.use('/api/nxb', nxbRoutes);
 app.use('/api/hoadon', hoadonRoutes);
 app.use('/api/cart', cartRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/api/order', orderRoutes);  // Đảm bảo sử dụng đúng route order
+app.use('/api/order', orderRoutes);  
+app.use('/api/baiviet', baivietRoutes);  
 
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
