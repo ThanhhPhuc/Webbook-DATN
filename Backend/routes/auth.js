@@ -287,22 +287,24 @@ router.post('/reset-password', async (req, res) => {
     }
 });
 
-
 // Xóa tài khoản người dùng
 router.delete('/delete-account', async (req, res) => {
-    const { userId } = req.body;
+    const { userId } = req.body; // Lấy userId từ body
 
     try {
+        // Tìm người dùng theo ID
         const user = await Khachhang.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User  not found' });
+            return res.status(404).json({ message: 'Người dùng không tồn tại' });
         }
 
-        await user.remove(); // Xóa tài khoản người dùng
-        res.json({ message: 'Account deleted successfully' });
+        // Sử dụng phương thức findByIdAndDelete để xóa người dùng
+        await Khachhang.findByIdAndDelete(userId);
+
+        res.json({ message: 'Tài khoản đã được xóa thành công' });
     } catch (error) {
         console.error('Error deleting account:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Có lỗi xảy ra trong quá trình xóa tài khoản.' });
     }
 });
 

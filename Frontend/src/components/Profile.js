@@ -101,7 +101,7 @@ const Profile = () => {
         const confirmDelete = window.confirm("Bạn có chắc chắn muốn xóa tài khoản không?");
         if (confirmDelete) {
             try {
-                await axios.delete(`http://localhost:5000/api/auth/delete-account`, {
+                const response = await axios.delete(`http://localhost:5000/api/auth/delete-account`, {
                     data: { userId: user._id }, // Gửi userId trong data
                     headers: {
                         Authorization: `Bearer ${user.token}` // Gửi token nếu cần

@@ -282,11 +282,20 @@ function Checkout() {
         <p>60 - 62 Lê Lợi, Quận 1, TP. HCM, Việt Nam</p>
         <p>Libworld.com nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng như tất cả hệ thống Libworld trên toàn quốc.</p>
         <div className="footer-social d-flex">
-            <a href="#" className="me-3"><i className="fa fa-facebook" /></a>
-            <a href="#" className="me-3"><i className="fa fa-twitter" /></a>
-            <a href="#" className="me-3"><i className="fa fa-instagram" /></a>
-            <a href="#"><i className="fa fa-youtube" /></a>
-        </div>
+    <a href="#" className="me-3">
+        <i className="bi bi-facebook"></i>
+    </a>
+    <a href="#" className="me-3">
+        <i className="bi bi-twitter"></i>
+    </a>
+    <a href="#" className="me-3">
+        <i className="bi bi-instagram"></i>
+    </a>
+    <a href="#">
+        <i className="bi bi-youtube"></i>
+    </a>
+</div>
+
     </div>
 </div>
             <div className="col-lg-2 col-md-7 mb-4">

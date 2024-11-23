@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
                 user: res.data.user,
             });
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('userId', res.data.user._id); // Lưu ID người dùng vào localStorage
             alert("Đăng nhập thành công!");
             navigate(res.data.user.permissions.includes('admin') ? '/admin' : '/');
         } catch (error) {

@@ -31,64 +31,69 @@ function Admin() {
 
   // Hàm để xóa người dùng
   const handleDelete = async (userId) => {
-    try {
-      const token = localStorage.getItem('token'); // Lấy token từ localStorage
-      const response = await axios.delete(`http://localhost:5000/api/auth/users/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Gửi token trong header
-        },
-      });
-      console.log(response.data);
-
-      // Hiển thị thông báo thành công
-      alert('Người dùng đã được xóa thành công!');
-
-      // Cập nhật lại danh sách người dùng sau khi xóa
-      setUsers((prevUsers) => prevUsers.filter(user => user._id !== userId));
-    } catch (error) {
-      console.error('Error deleting user:', error);
-      // Hiển thị thông báo lỗi nếu cần
-      alert('Có lỗi xảy ra khi xóa người dùng!');
+    // Kiểm tra xem người dùng đang cố gắng xóa chính mình
+    if (userId === localStorage.getItem('userId')) {
+        alert("Bạn không thể xóa tài khoản của chính mình.");
+        return;
     }
-  };
+    try {
+        const token = localStorage.getItem('token'); // Lấy token từ localStorage
+        const response = await axios.delete(`http://localhost:5000/api/auth/users/${userId}`, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Gửi token trong header
+            },
+        });
+        console.log(response.data);
 
-  // Hàm để cấp quyền admin
+        // Hiển thị thông báo thành công
+        alert('Người dùng đã được xóa thành công!');
+
+        // Cập nhật lại danh sách người dùng sau khi xóa
+        setUsers((prevUsers) => prevUsers.filter(user => user._id !== userId));
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        // Hiển thị thông báo lỗi nếu cần
+        alert('Có lỗi xảy ra khi xóa người dùng!');
+    }
+};
+
   const handleGrantAdmin = async (userId) => {
     try {
-      const token = localStorage.getItem('token'); // Lấy token từ localStorage
-      const response = await axios.put(`http://localhost:5000/api/auth/grant-admin/${userId}`, null, {
-        headers: {
-          Authorization: `Bearer ${token}`, // Đính kèm token vào request
-        },
-      });
-      console.log('Admin privileges granted:', response.data);
-      // Cập nhật lại danh sách người dùng
-      fetchUsers(); // Gọi lại fetchUsers để cập nhật danh sách người dùng
+        const token = localStorage.getItem('token'); // Lấy token từ localStorage
+        const response = await axios.put(`http://localhost:5000/api/auth/grant-admin/${userId}`, null, {
+            headers: {
+                Authorization: `Bearer ${token}`, // Đính kèm token vào request
+            },
+        });
+        console.log('Admin privileges granted:', response.data);
+        // Cập nhật lại danh sách người dùng
+        fetchUsers(); // Gọi lại fetchUsers để cập nhật danh sách người dùng
     } catch (error) {
-      console.error('Error granting admin:', error);
+        console.error('Error granting admin:', error);
     }
-  };
+};
 
-  const handleRevokeAdmin = async (userId) => {
+const handleRevokeAdmin = async (userId) => {
+    // Kiểm tra xem người dùng đang cố gắng thu hồi quyền admin của chính mình
+    if (userId === localStorage.getItem('userId')) {
+        alert("Bạn không thể thu hồi quyền admin của chính mình.");
+        return;
+    }
+
     try {
-      const token = localStorage.getItem('token'); // Lấy token từ localStorage
-      const response = await axios.put(`http://localhost:5000/api/auth/revoke-admin/${userId}`, null, {
-        headers: {
-          Authorization: `Bearer ${token}` // Đính kèm token vào request
-        }
-      });
-      console.log('Admin privileges revoked:', response.data);
-      // Cập nhật lại danh sách người dùng
-      fetchUsers(); // Gọi lại fetchUsers để cập nhật danh sách người dùng
+        const token = localStorage.getItem('token'); // Lấy token từ localStorage
+        const response = await axios.put(`http://localhost:5000/api/auth/revoke-admin/${userId}`, null, {
+            headers: {
+                Authorization: `Bearer ${token}` // Đính kèm token vào request
+            }
+        });
+        console.log('Admin privileges revoked:', response.data);
+        // Cập nhật lại danh sách người dùng
+        fetchUsers(); // Gọi lại fetchUsers để cập nhật danh sách người dùng
     } catch (error) {
-      console.error('Error revoking admin:', error.response.data);
+        console.error('Error revoking admin:', error.response.data);
     }
-  };
-  
-  
-
-
-
+};
   return (
     <div>
       <div className="row">
@@ -136,7 +141,6 @@ function Admin() {
         <div className="col-md-10">
           <div className="admin-header bg-primary text-white p-3 mb-3">
             <p>Chào mừng đến trang quản trị của Nhà sách Libworld</p>
-            {/* <button className="btn btn-outline-light" onClick={handleLogout}>Đăng xuất</button> */}
           </div>
 
           <div className="admin-content p-3">

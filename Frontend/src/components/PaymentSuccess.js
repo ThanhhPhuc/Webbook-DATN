@@ -1,20 +1,4 @@
-// import React from 'react';
-// import { useLocation } from 'react-router-dom';
 
-// function PaymentSuccess() {
-//     const location = useLocation();
-//     const { orderId } = location.state || {};
-
-//     return (
-//         <div>
-//             <h1>Thanh toán thành công!</h1>
-//             <p>Đơn hàng của bạn đã được xác nhận. Mã đơn hàng: {orderId}</p>
-//             <p>Chúng tôi sẽ gửi email xác nhận đến bạn.</p>
-//         </div>
-//     );
-// }
-
-// export default PaymentSuccess;
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
 
