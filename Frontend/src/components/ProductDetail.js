@@ -67,6 +67,7 @@ const ProductDetail = () => {
     if (product && product.inventory > 0) {
       try {
         await addToCart("670d2d7f4f9223989b3f51ed", product._id, quantity);
+        console.log("Product added to cart successfully");
         navigate('/cart');
       } catch (error) {
         console.error('Error adding product to cart:', error);
@@ -123,9 +124,9 @@ const ProductDetail = () => {
                 <button
                   className={`btn btn-primary ${product.inventory === 0 ? 'disabled' : ''}`}
                   onClick={handleAddToCart}
-                  disabled={product.sach.inventory === 0}
+                  disabled={product.inventory === 0}
                 >
-                  {product.sach.inventory === 0 ? 'Hết hàng' : 'Thêm vào giỏ hàng'}
+                  {product.inventory === 0 ? 'Hết hàng' : 'Thêm vào giỏ hàng'}
                 </button>
               </div>
             </form>

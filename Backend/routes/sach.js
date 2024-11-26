@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Sach = require('../models/Sach');
-
+const Comment = require('../models/Comment'); // Mô hình bình luận
 // Thêm sách
 router.post('/', async (req, res) => {
   const { title, author, publisher, category, namXB, description, price, image } = req.body;
@@ -45,7 +45,6 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Error fetching books', message: error.message });
   }
 });
-//sach
 router.get('/:id', async (req, res) => {
   try {
     const sach = await Sach.findById(req.params.id)
