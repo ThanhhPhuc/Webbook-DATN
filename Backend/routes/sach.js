@@ -32,36 +32,6 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Lấy tất cả sách với phân trang
-// router.get('/', async (req, res) => {
-//   const page = parseInt(req.query.page) || 1; // Trang mặc định là 1 nếu không có tham số
-//   const limit = parseInt(req.query.limit) || 9; // Số lượng sách mỗi trang
-//   const skip = (page - 1) * limit;
-
-//   try {
-//     const books = await Sach.find()
-//       .skip(skip) // Bỏ qua sách đã hiển thị
-//       .limit(limit) // Giới hạn số sách hiển thị
-//       .populate('author', 'name') // Lấy thông tin tác giả
-//       .populate('publisher', 'name') // Lấy thông tin nhà xuất bản
-//       .populate('category', 'name') // Lấy thông tin thể loại
-//       .select('_id title price image inventory author publisher category');
-
-//     const totalBooks = await Sach.countDocuments(); // Tổng số sách
-//     const totalPages = Math.ceil(totalBooks / limit); // Số trang
-
-//     res.status(200).json({
-//       books,
-//       totalPages,
-//       currentPage: page,
-//     });
-//   } catch (error) {
-//     console.error('Error fetching books:', error.message);
-//     res.status(500).json({ error: 'Error fetching books', message: error.message });
-//   }
-// });
-
-
 router.get('/', async (req, res) => {
   try {
     const books = await Sach.find()
@@ -75,18 +45,26 @@ router.get('/', async (req, res) => {
     res.status(500).json({ error: 'Error fetching books', message: error.message });
   }
 });
-
-// Lấy sách theo ID
+//sach
 router.get('/:id', async (req, res) => {
-  const { id } = req.params;
   try {
-    const sach = await Sach.findById(id);
-    if (!sach) return res.status(404).json({ error: 'Sách không tìm thấy' });
-    res.json(sach);
+    const sach = await Sach.findById(req.params.id)
+      .populate('author', 'name')
+      .populate('publisher', 'name')
+      .populate('category', 'name');
+    if (!sach) {
+      return res.status(404).json({ error: 'Book not found' });
+    }
+    const comments = await Comment.find({ product_id: req.params.id })
+    .populate('user_id', 'username email');
+
+res.json({ sach, comments });
   } catch (error) {
-    res.status(500).json({ error: 'Lỗi khi lấy sách', message: error.message });
+    console.error('Error fetching book:', error.message);
+    res.status(500).json({ error: 'Internal server error', message: error.message });
   }
 });
+
 
 // Cập nhật sách theo ID
 router.put('/:id', async (req, res) => {

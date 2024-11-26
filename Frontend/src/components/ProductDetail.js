@@ -4,6 +4,7 @@ import axios from 'axios';
 import { CartContext } from '../context/CartContext';
 import Header from './Header';
 import { AuthContext } from '../context/AuthContext';
+import '../context/AuthContext';
 import CommentForm from './formCM';
 
 const ProductDetail = () => {
@@ -24,6 +25,7 @@ const ProductDetail = () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/sach/${id}`);
         setProduct(res.data);
+
   
         if (res.data?.author) {
           const authorRes = await axios.get(`http://localhost:5000/api/tacgia/${res.data.author}`);
@@ -94,15 +96,15 @@ const ProductDetail = () => {
       </div>
       <div className="row bg-white p-2 mt-2 pt-4 bdr-10">
         <div className="col-md-5 d-flex justify-content-center">
-          <img src={product.image} alt="Sản phẩm" className="img-single_product" />
+          <img src={product.sach.image} alt="Sản phẩm" className="img-single_product" />
         </div>
         <div className="col-md-7 product-details">
-          <h2 className="product-title">{product.title}</h2>
+          <h2 className="product-title">{product.sach.title}</h2>
           <div className="single-product-price">
-            <span className="price new-price">{product.price}<sup>đ</sup></span>
+            <span className="price new-price">{product.sach.price}<sup>đ</sup></span>
           </div>
           <div className="product-description">
-            <p>{product.description}</p>
+            <p>{product.sach.description}</p>
           </div>
 
           <div className="single-product-quantity">
@@ -121,9 +123,9 @@ const ProductDetail = () => {
                 <button
                   className={`btn btn-primary ${product.inventory === 0 ? 'disabled' : ''}`}
                   onClick={handleAddToCart}
-                  disabled={product.inventory === 0}
+                  disabled={product.sach.inventory === 0}
                 >
-                  {product.inventory === 0 ? 'Hết hàng' : 'Thêm vào giỏ hàng'}
+                  {product.sach.inventory === 0 ? 'Hết hàng' : 'Thêm vào giỏ hàng'}
                 </button>
               </div>
             </form>
@@ -131,16 +133,16 @@ const ProductDetail = () => {
           <div className="product-meta">
   <div className="product-details">
   <span className="posted-in">
-  <strong>Thể loại:</strong> <a href="#"> {category ? category.name : 'Không có thể loại'}</a>
+  <strong>Thể loại:</strong> <a href="#"> {product.sach.category.name }</a>
 </span>
 <span className="posted-in">
-  <strong>Tác giả:</strong> <a href="#" className="author-link"> {author ? author.name : 'Không có tác giả'}</a>
+  <strong>Tác giả:</strong> <a href="#" className="author-link"> {product.sach.author.name}</a>
 </span>
 <span className="posted-in">
-  <strong>Nhà xuất bản:</strong> <a href="#" className="publisher-link"> {publisher ? publisher.name : 'Không có nhà xuất bản'}</a>
+  <strong>Nhà xuất bản:</strong> <a href="#" className="publisher-link"> {product.sach.publisher.name}</a>
 </span>
 <span className="posted-in">
-      <strong>Năm xuất bản:</strong> <span className="year-published"> {product.namXB}</span>
+      <strong>Năm xuất bản:</strong> <span className="year-published"> {product.sach.namXB}</span>
     </span>
   </div>
 </div>
@@ -169,21 +171,21 @@ const ProductDetail = () => {
                       </div>
                       <div className="col-8 col-sm-8 col-lg-10">
                         <p className="mt-content">
-                          - Tên: {product.title} <br/>
-                          - Thể loại: {category ? category.name : 'Không có thể loại'} <br/>
-                          - Tác giả: {author ? author.name : 'Không có tác giả'} <br/>
-                          - NXB: {publisher ? publisher.name : 'Không có nhà xuất bản'} <br/>
-                          - Năm XB: {product.namXB} <br />
-                          - Mô tả: {product.description} <br /> 
+                          - Tên: {product.sach.title} <br/>
+                          - Thể loại: {product.sach.category.name } <br/>
+                          - Tác giả: {product.sach.author.name } <br/>
+                          - NXB: {product.sach.publisher.name} <br/>
+                          - Năm XB: {product.sach.namXB} <br />
+                          - Mô tả: {product.sach.description} <br /> 
                         </p>
                       </div>
                     </div>
                   </div>
                   <div className="tab-pane fade" id="reviews">
                     <div className="review-page-comment">
-                      <h2>{product.comments?.length || 0} đánh giá</h2>
+                      <h2>{product.comments.length} đánh giá</h2>
                       <ul>
-                        {product.comments?.map((comment) => (
+                        {product.comments.map((comment, index) => (
                           <li key={comment._id}>
                             <div className="product-comment mb-20">
                               <img src="assets/images/user1.png" alt="user" />
@@ -213,11 +215,13 @@ const ProductDetail = () => {
                       <div className="review-form-wrapper">
                         <div className="review-form">
                           <span className="comment-reply-title">Thêm một bài đánh giá </span>
+
                           {userId ? (
-                            <CommentForm productId={product._id} userId={userId} />
+                            <CommentForm productId={product.sach._id} userId={userId} />
                           ) : (
                             <p>Please log in to leave a comment.</p>
                           )}
+
                         </div>
                       </div>
                     </div>

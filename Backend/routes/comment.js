@@ -4,24 +4,6 @@ const Comment = require('../models/Comment'); // Mô hình bình luận
 const Khachhang = require('../models/Khachhang'); // Đảm bảo đúng mô hình người dùng
 const Sach = require('../models/Sach')
 
-// router.get('/', async (req, res) => {
-//   try {
-//     const comments = await Comment.find();
-//       // .populate('user_id', 'username')
-//       // .populate('product_id', 'title'); 
-
-//     res.status(200).json(comments);
-//   } catch (error) {
-//     console.error('Error fetching comments:', error.message);
-//     if (error.name === 'CastError') {
-//       return res.status(400).json({ error: 'ID không hợp lệ', message: error.message });
-//     } else if (error.name === 'ValidationError') {
-//       return res.status(422).json({ error: 'Lỗi xác thực', message: error.message });
-//     } else {
-//       return res.status(500).json({ error: 'Lỗi khi tải bình luận', message: error.message });
-//     }
-//   }
-// });
 router.get('/', async (req, res) => {
   try {
      
@@ -46,7 +28,7 @@ router.get('/:productId', async (req, res) => {
   try {
       const { productId } = req.params;
 
-      // Find comments related to the specific product and populate book and user info
+ 
       const comments = await Comment.find({ product_id: productId })
           .populate({
               path: 'product_id',

@@ -34,4 +34,4 @@ const CommentSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('binhluan', CommentSchema); // Use a singular name for model export
+module.exports = mongoose.model('Comment', CommentSchema); // Use a singular name for model export

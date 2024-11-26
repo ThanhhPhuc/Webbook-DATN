@@ -50,7 +50,7 @@ function AdminComment() {
       <div className="row">
         <div className="col-md-2 bg-light p-3">
           <div className="libworld-logo text-center mb-3">
-          <h1><span>Libworld</span></h1>
+            <h1><span>Libworld</span><span className="text-white"> SHOP</span></h1>
           </div>
           <hr />
           <nav>
@@ -74,13 +74,10 @@ function AdminComment() {
                 <a href="/admin" className="nav-link text-dark"><i className="bi bi-people-fill me-2"></i>Quản lý người dùng</a>
               </li>
               <li className="nav-item mb-2">
-                <a href="/adminorder" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
+                <a href="#" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
               </li>
               <li className="nav-item mb-2">
                 <a href="/adminbinhluan" className="nav-link text-dark"><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a>
-              </li>
-              <li className="nav-item mb-2">
-                <a href="/adminbaiviet" className="nav-link text-dark"><i className="bi bi-journal-text me-2"></i>Quản lý bài viết</a>
               </li>
             </ul>
           </nav>
@@ -118,7 +115,7 @@ function AdminComment() {
                   comments.map((comment) => (
                     <tr key={comment._id}>
                       <td>{comment.comment_content}</td>
-                      <td>{comment.product_id.title}</td>
+                      <td>{comment.title}</td>
                       <td>{comment.user_id.username}</td>
                       <td>{comment.user_id.email}</td>
                       <td>
