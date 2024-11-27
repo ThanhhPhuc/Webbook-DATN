@@ -26,6 +26,7 @@ import OrderDetail from './components/OrderDetail';
 import ProfileOrderDetail from './components/ProfileOrderDetail';
 import AdminBaiViet from './components/AdminBaiViet';
 import PostDetail from './components/PostDetail';
+import OrderList from './components/OrderList';
 function App() {
   return (
     <Router>
@@ -55,6 +56,9 @@ function App() {
             <Route path="/profile/order/:orderId" element={<ProfileOrderDetail />} />
             <Route path="/adminbaiviet" element={<AdminBaiViet />} />
             <Route path="/baiviet/:id" element={<PostDetail />} />
+
+            <Route path="/orderlist" element={<OrderList />} />
+
           </Routes>
         </CartProvider>
       </AuthProvider>

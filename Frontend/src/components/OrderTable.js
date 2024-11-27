@@ -47,6 +47,8 @@ const OrderTable = () => {
       setOrders(orders => orders.map(order =>
         order._id === orderId ? { ...order, status: newStatus } : order
       ));
+       // Gọi lại API để làm mới dữ liệu từ server
+    fetchOrders();
     } catch (error) {
       console.error('Lỗi khi cập nhật trạng thái đơn hàng:', error);
     }
@@ -118,7 +120,7 @@ const OrderTable = () => {
           <hr />
           <nav>
             <ul className="nav flex-column">
-              <li className="nav-item mb-2"><a href="#" className="nav-link text-dark"><i className="bi bi-pie-chart-fill me-2"></i>Quản lý thống kê</a></li>
+              <li className="nav-item mb-2"><a href="/orderlist" className="nav-link text-dark"><i className="bi bi-pie-chart-fill me-2"></i>Quản lý thống kê</a></li>
               <li className="nav-item mb-2"><a href="/admintheloai" className="nav-link text-dark"><i className="bi bi-tag-fill me-2"></i>Quản lý thể loại</a></li>
               <li className="nav-item mb-2"><a href="/admintacgia" className="nav-link text-dark"><i className="bi bi-pen-fill"></i> Quản lý tác giả</a></li>
               <li className="nav-item mb-2"><a href="/adminnxb" className="nav-link text-dark"><i className="bi bi-book-fill"></i> Quản lý nhà xuất bản</a></li>
@@ -148,7 +150,7 @@ const OrderTable = () => {
                   <th>Mã đơn hàng</th>
                   <th>Tên khách hàng</th>
                   <th>Số điện thoại</th>
-                  <th>Sản phẩm</th>
+                  {/* <th>Sản phẩm</th> */}
                   <th>Tổng giá trị</th>
                   <th>Trạng thái</th>
                   <th>Thao tác</th>
@@ -164,7 +166,7 @@ const OrderTable = () => {
                     </td>
                     <td>{order.userName}</td>
                     <td>{order.userPhone}</td>
-                    <td>
+                    {/* <td>
                       <ul>
                         {order.orderDetails.map((detail, index) => (
                           <li key={index} className="d-flex align-items-center">
@@ -177,7 +179,7 @@ const OrderTable = () => {
                           </li>
                         ))}
                       </ul>
-                    </td>
+                    </td> */}
                     <td>{order.totalPrice} VND</td>
                     <td>{order.status}</td>
                     {/* <td>
