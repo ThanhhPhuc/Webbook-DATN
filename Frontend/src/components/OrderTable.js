@@ -72,17 +72,36 @@ const OrderTable = () => {
             </div>
             <hr />
             <nav>
-              <ul className="nav flex-column">
-                <li className="nav-item mb-2"><a href="#" className="nav-link text-dark"><i className="bi bi-pie-chart-fill me-2"></i>Quản lý thống kê</a></li>
-                <li className="nav-item mb-2"><a href="/admintheloai" className="nav-link text-dark"><i className="bi bi-tag-fill me-2"></i>Quản lý thể loại</a></li>
-                <li className="nav-item mb-2"><a href="/admintacgia" className="nav-link text-dark"><i className="bi bi-pen-fill"></i> Quản lý tác giả</a></li>
-                <li className="nav-item mb-2"><a href="/adminnxb" className="nav-link text-dark"><i className="bi bi-book-fill"></i> Quản lý nhà xuất bản</a></li>
-                <li className="nav-item mb-2"><a href="/adminsach" className="nav-link text-dark"><i className="bi bi-box-seam-fill me-2"></i>Quản lý sách</a></li>
-                <li className="nav-item mb-2"><a href="/admin" className="nav-link text-dark"><i className="bi bi-people-fill me-2"></i>Quản lý người dùng</a></li>
-                <li className="nav-item mb-2"><a href="/adminorder" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a></li>
-                <li className="nav-item mb-2"><a href="#" className="nav-link text-dark"><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a></li>
-              </ul>
-            </nav>
+            <ul className="nav flex-column">
+              <li className="nav-item mb-2">
+                <a href="/orderlist" className="nav-link text-dark"><i className="bi bi-pie-chart-fill me-2"></i>Quản lý thống kê</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/admintheloai" className="nav-link text-dark"><i className="bi bi-tag-fill me-2"></i>Quản lý thể loại</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/admintacgia" className="nav-link text-dark"><i className="bi bi-pen-fill"></i> Quản lý tác giả</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminnxb" className="nav-link text-dark"><i className="bi bi-book-fill"></i> Quản lý nhà xuất bản</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminsach" className="nav-link text-dark"><i className="bi bi-box-seam-fill me-2"></i>Quản lý sách</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/admin" className="nav-link text-dark"><i className="bi bi-people-fill me-2"></i>Quản lý người dùng</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminorder" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
+ </li>
+              <li className="nav-item mb-2">
+                <a href="/admincomment" className="nav-link text-dark"><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminbaiviet" className="nav-link text-dark"><i className="bi bi-journal-text me-2"></i>Quản lý bài viết</a>
+              </li>
+            </ul>
+          </nav>
             <hr />
             <div className="admin-logout-btn">
               <button className="btn btn-danger w-100" onClick={handleLogout}>Đăng xuất</button>
@@ -120,14 +139,33 @@ const OrderTable = () => {
           <hr />
           <nav>
             <ul className="nav flex-column">
-              <li className="nav-item mb-2"><a href="/orderlist" className="nav-link text-dark"><i className="bi bi-pie-chart-fill me-2"></i>Quản lý thống kê</a></li>
-              <li className="nav-item mb-2"><a href="/admintheloai" className="nav-link text-dark"><i className="bi bi-tag-fill me-2"></i>Quản lý thể loại</a></li>
-              <li className="nav-item mb-2"><a href="/admintacgia" className="nav-link text-dark"><i className="bi bi-pen-fill"></i> Quản lý tác giả</a></li>
-              <li className="nav-item mb-2"><a href="/adminnxb" className="nav-link text-dark"><i className="bi bi-book-fill"></i> Quản lý nhà xuất bản</a></li>
-              <li className="nav-item mb-2"><a href="/adminsach" className="nav-link text-dark"><i className="bi bi-box-seam-fill me-2"></i>Quản lý sách</a></li>
-              <li className="nav-item mb-2"><a href="/admin" className="nav-link text-dark"><i className="bi bi-people-fill me-2"></i>Quản lý người dùng</a></li>
-              <li className="nav-item mb-2"><a href="/adminorder" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a></li>
-              <li className="nav-item mb-2"><a href="#" className="nav-link text-dark"><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a></li>
+              <li className="nav-item mb-2">
+                <a href="/orderlist" className="nav-link text-dark"><i className="bi bi-pie-chart-fill me-2"></i>Quản lý thống kê</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/admintheloai" className="nav-link text-dark"><i className="bi bi-tag-fill me-2"></i>Quản lý thể loại</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/admintacgia" className="nav-link text-dark"><i className="bi bi-pen-fill"></i> Quản lý tác giả</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminnxb" className="nav-link text-dark"><i className="bi bi-book-fill"></i> Quản lý nhà xuất bản</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminsach" className="nav-link text-dark"><i className="bi bi-box-seam-fill me-2"></i>Quản lý sách</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/admin" className="nav-link text-dark"><i className="bi bi-people-fill me-2"></i>Quản lý người dùng</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminorder" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
+ </li>
+              <li className="nav-item mb-2">
+                <a href="/admincomment" className="nav-link text-dark"><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminbaiviet" className="nav-link text-dark"><i className="bi bi-journal-text me-2"></i>Quản lý bài viết</a>
+              </li>
             </ul>
           </nav>
           <hr />

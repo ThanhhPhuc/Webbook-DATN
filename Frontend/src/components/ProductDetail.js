@@ -189,7 +189,7 @@ const ProductDetail = () => {
                         {product.comments.map((comment, index) => (
                           <li key={comment._id}>
                             <div className="product-comment mb-20">
-                              <img src="assets/images/user1.png" alt="user" />
+                              <img src="/../assets/images/iconuser.jpg" alt="user" />
                               <div className="product-comment-content">
                                 <div className="product-reviews">
                                   {[...Array(5)].map((star, i) => (
@@ -220,7 +220,7 @@ const ProductDetail = () => {
                           {userId ? (
                             <CommentForm productId={product.sach._id} userId={userId} />
                           ) : (
-                            <p>Please log in to leave a comment.</p>
+                            <p>Vui lòng đăng nhập để được bình luận!</p>
                           )}
 
                         </div>
