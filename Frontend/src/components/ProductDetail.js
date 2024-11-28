@@ -168,7 +168,7 @@ const ProductDetail = () => {
                   <div className="tab-pane fade active show" id="description">
                     <div className="single-product-description row">
                       <div className="col-4 col-sm-4 col-lg-2 d-flex justify-content-end">
-                        <img src={product.image || ""} alt="" className="mt-img" />
+                        <img src={product.sach.image || ""} alt="" className="mt-img" />
                       </div>
                       <div className="col-8 col-sm-8 col-lg-10">
                         <p className="mt-content">
