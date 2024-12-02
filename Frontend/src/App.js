@@ -27,6 +27,7 @@ import ProfileOrderDetail from './components/ProfileOrderDetail';
 import AdminBaiViet from './components/AdminBaiViet';
 import PostDetail from './components/PostDetail';
 import OrderList from './components/OrderList';
+import ProtectedRoute from './context/ProtectedRoute';
 function App() {
   return (
     <Router>
@@ -40,7 +41,9 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/search" element={<SearchResult />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={<ProtectedRoute />}>
+          <Route path="" element={<Admin />} />
+        </Route>
             <Route path="/admintheloai" element={<Admintheloai />} />
             <Route path="/adminnxb" element={<AdminNXB />} />
             <Route path="/admintacgia" element={<Admintacgia />} />

@@ -29,13 +29,19 @@ function Admin() {
     navigate('/'); // Chuyển hướng về trang chính
   };
 
-  // Hàm để xóa người dùng
-  const handleDelete = async (userId) => {
+  const handleDelete = async (userId, email) => {
+    // Kiểm tra xem người dùng có phải là admin hay không
+    if (email === 'admin@gmail.com') {
+        alert("Bạn không thể xóa tài khoản admin.");
+        return;
+    }
+
     // Kiểm tra xem người dùng đang cố gắng xóa chính mình
     if (userId === localStorage.getItem('userId')) {
         alert("Bạn không thể xóa tài khoản của chính mình.");
         return;
     }
+
     try {
         const token = localStorage.getItem('token'); // Lấy token từ localStorage
         const response = await axios.delete(`http://localhost:5000/api/auth/users/${userId}`, {
@@ -57,7 +63,7 @@ function Admin() {
     }
 };
 
-  const handleGrantAdmin = async (userId) => {
+const handleGrantAdmin = async (userId) => {
     try {
         const token = localStorage.getItem('token'); // Lấy token từ localStorage
         const response = await axios.put(`http://localhost:5000/api/auth/grant-admin/${userId}`, null, {
@@ -73,7 +79,13 @@ function Admin() {
     }
 };
 
-const handleRevokeAdmin = async (userId) => {
+const handleRevokeAdmin = async (userId, email) => {
+    // Kiểm tra xem người dùng có phải là admin hay không
+    if (email === 'admin@gmail.com') {
+        alert("Bạn không thể thu hồi quyền admin của tài khoản admin.");
+        return;
+    }
+
     // Kiểm tra xem người dùng đang cố gắng thu hồi quyền admin của chính mình
     if (userId === localStorage.getItem('userId')) {
         alert("Bạn không thể thu hồi quyền admin của chính mình.");
@@ -91,7 +103,7 @@ const handleRevokeAdmin = async (userId) => {
         // Cập nhật lại danh sách người dùng
         fetchUsers(); // Gọi lại fetchUsers để cập nhật danh sách người dùng
     } catch (error) {
-        console.error('Error revoking admin:', error.response.data);
+        console.error('Error revoking admin privileges:', error.response.data);
     }
 };
   return (
@@ -162,14 +174,14 @@ const handleRevokeAdmin = async (userId) => {
       <td>{user.email}</td>
       <td>{user.dienthoai}</td>
       <td>{user.diachi}</td>
-      <td>{user.permissions.join(', ')}</td>
+      <td>{user.permissions .join(', ')}</td>
       <td>
-        <button className="btn btn-danger me-2" onClick={() => handleDelete(user._id)}>Xóa</button>
+        <button className="btn btn-danger me-2" onClick={() => handleDelete(user._id, user.email)}>Xóa</button>
         <button
           className={`btn btn-${user.permissions.includes('admin') ? 'danger' : 'warning'}`}
           onClick={() => {
             if (user.permissions.includes('admin')) {
-              handleRevokeAdmin(user._id);
+              handleRevokeAdmin(user._id, user.email);
             } else {
               handleGrantAdmin(user._id);
             }

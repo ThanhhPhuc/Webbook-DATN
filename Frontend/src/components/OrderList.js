@@ -1,73 +1,126 @@
 import React, { useEffect, useState } from 'react';
-import { fetchOrders } from './OrderService'; // Giả sử đây là hàm API để lấy dữ liệu
-import { useNavigate } from 'react-router-dom'; // Thêm import này
+import { fetchOrders } from './OrderService';
+import { useNavigate } from 'react-router-dom';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, LineElement, PointElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
+
+// Đăng ký các thành phần cần thiết
+ChartJS.register(LineElement, PointElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
 const OrderList = () => {
-  // State để lưu danh sách đơn hàng và thông tin thống kê
   const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(true); // Trạng thái loading khi đang tải dữ liệu
-  const [error, setError] = useState(null); // Trạng thái lỗi
-
-  // State để lưu thông tin thống kê
-  const [totalOrders, setTotalOrders] = useState(0); // Tổng số đơn hàng
-  const [totalQuantity, setTotalQuantity] = useState(0); // Tổng số lượng sách
-  const [totalPrice, setTotalPrice] = useState(0); // Tổng số tiền từ tất cả đơn hàng
-
-  const navigate = useNavigate();  // Điều hướng sau khi logout
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [totalOrders, setTotalOrders] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Lấy danh sách đơn hàng từ API khi component mount
     const loadOrders = async () => {
       try {
-        const data = await fetchOrders(); // Gọi API để lấy danh sách đơn hàng
+        const data = await fetchOrders();
         setOrders(data);
-
-        // Tính tổng số đơn hàng
         setTotalOrders(data.length);
-
-        // Tính tổng số lượng sách trong tất cả các đơn hàng
+        
         const totalQuantityCount = data.reduce((sum, order) => {
           return sum + order.orderDetails.reduce((orderSum, item) => {
-            return orderSum + item.quantity;  // Cộng dồn số lượng sách từ trường quantity
+            return orderSum + item.quantity;
           }, 0);
         }, 0);
-        setTotalQuantity(totalQuantityCount); // Cập nhật tổng số lượng sách
-
-        // Tính tổng tiền từ tất cả các đơn hàng
+        setTotalQuantity(totalQuantityCount);
+        
         const total = data.reduce((sum, order) => {
           if (order.totalPrice && !isNaN(order.totalPrice)) {
-            return sum + Number(order.totalPrice); // Đảm bảo chuyển thành số
+            return sum + Number(order.totalPrice);
           }
-          return sum;  // Nếu không có totalPrice hợp lệ, bỏ qua
+          return sum;
         }, 0);
-        setTotalPrice(total);  // Cập nhật tổng tiền
+        setTotalPrice(total);
       } catch (err) {
         console.error('Lỗi khi lấy đơn hàng:', err);
         setError('Không thể tải danh sách đơn hàng');
       } finally {
-        setLoading(false); // Đặt trạng thái loading thành false khi hoàn thành tải dữ liệu
+        setLoading(false);
       }
     };
     loadOrders();
-  }, []); // Chạy khi component mount
+  }, []);
 
-  // Hiển thị nếu đang tải dữ liệu
   if (loading) {
     return <div>Đang tải danh sách đơn hàng...</div>;
   }
 
-  // Hiển thị nếu có lỗi khi tải dữ liệu
   if (error) {
     return <div>{error}</div>;
   }
 
-  // Hiển thị tổng tiền với định dạng VND
   const formattedTotalPrice = totalPrice > 0 ? totalPrice.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) : 'Chưa có tiền';
 
-  // Xử lý logout
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/'); // Điều hướng về trang chủ sau khi đăng xuất
+    navigate('/');
+  };
+
+  // Prepare data for the line chart
+  const dailySales = {};
+  orders.forEach(order => {
+    const orderDate = new Date(order.createdAt);
+    const dateString = orderDate.toLocaleDateString();
+
+    if (!dailySales[dateString]) {
+      dailySales[dateString] = 0;
+    }
+    dailySales[dateString] += order.totalPrice;
+  });
+
+  const chartLabels = Object.keys(dailySales);
+  const chartDataValues = Object.values(dailySales);
+  const chartData = {
+    labels: chartLabels,
+    datasets: [
+      {
+        label: 'Giá trị đơn hàng',
+        data: chartDataValues,
+        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        pointRadius: 5, // Kích thước điểm
+        pointHoverRadius: 7, // Kích thước điểm khi hover
+        fill: true, // Đổ màu dưới đường
+      },
+    ],
+  };
+
+  const options = {
+    responsive: true ,
+    plugins: {
+      legend: {
+        display: true,
+        position: 'top',
+      },
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem) {
+            return `Ngày: ${tooltipItem.label}, Giá trị: ${tooltipItem.raw.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}`;
+          },
+        },
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Ngày',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Giá trị (VND)',
+        },
+        beginAtZero: true,
+      },
+    },
   };
 
   return (
@@ -80,7 +133,7 @@ const OrderList = () => {
           <hr />
           <nav>
             <ul className="nav flex-column">
-            <li className="nav-item mb-2">
+              <li className="nav-item mb-2">
                 <a href="/orderlist" className="nav-link text-dark"><i className="bi bi-pie-chart-fill me-2"></i>Quản lý thống kê</a>
               </li>
               <li className="nav-item mb-2">
@@ -99,10 +152,13 @@ const OrderList = () => {
                 <a href="/admin" className="nav-link text-dark"><i className="bi bi-people-fill me-2"></i>Quản lý người dùng</a>
               </li>
               <li className="nav-item mb-2">
-                <a href="#" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
+                <a href="/adminorder" className="nav-link text-dark"><i className="bi bi-cart-fill me-2"></i>Quản lý đơn hàng</a>
               </li>
               <li className="nav-item mb-2">
                 <a href="/admincoment" className="nav-link text-dark"><i className="bi bi-chat-left-text-fill me-2"></i>Quản lý bình luận</a>
+              </li>
+              <li className="nav-item mb-2">
+                <a href="/adminbaiviet" className="nav-link text-dark"><i className="bi bi-journal-text me-2"></i>Quản lý bài viết</a>
               </li>
             </ul>
           </nav>
@@ -141,9 +197,12 @@ const OrderList = () => {
                 </tr>
               </tbody>
             </table>
+
+            {/* Biểu đồ đường cho giá trị đơn hàng */}
+            <div className="chart-container">
+              <Line data={chartData} options={options} />
+            </div>
           </div>
-
-
         </div>
       </div>
     </div>
