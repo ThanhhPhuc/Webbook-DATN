@@ -1,0 +1,99 @@
+/* CSS PostDetail */
+.post-detail {
+    display: flex;
+    flex-direction: row; /* Hiển thị main content và related posts theo hàng ngang */
+    gap: 20px; /* Khoảng cách giữa các phần */
+    margin-top: 30px;
+  }
+  
+  .main-content {
+    flex: 3; /* Phần chính chiếm 3 phần */
+    background-color: var(--white);
+    padding: 0px 20px;
+    border-radius: 8px;
+    /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
+  }
+  
+  .main-content h1 {
+    font-size: 2rem;
+    font-weight: var(--fw-800);
+    color: var(--xiketic);
+    margin-bottom: 20px;
+  }
+  
+  .main-content img {
+    border-radius: 8px;
+    margin-bottom: 20px;
+  }
+  
+  .main-content p {
+    font-size: 1rem;
+    color: var(--dim-gray);
+    line-height: 1.8;
+    margin-bottom: 15px;
+  }
+  
+  .related-posts {
+    flex: 1; /* Phần bài viết liên quan chiếm 1 phần */
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .related-posts h2 {
+    font-size: 1.5rem;
+    font-weight: var(--fw-700);
+    color: var(--xiketic);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .related-posts ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .related-posts li {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .related-posts li img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .related-posts li a {
+    font-size: 1rem;
+    font-weight: var(--fw-600);
+    color: var(--marigold);
+    text-decoration: none;
+    text-align: center;
+  }
+  
+  .related-posts li a:hover {
+    color: var(--xiketic);
+    text-decoration: underline;
+  }
+  
+  .quaylai {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--marigold);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .quaylai:hover {
+    background-color: var(--xiketic);
+  }
+  
